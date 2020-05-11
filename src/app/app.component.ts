@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app-poster';
+  public year;
+
+  constructor(){
+    this.year = new Date().getFullYear();
+  }
 }

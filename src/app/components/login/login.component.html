@@ -1,0 +1,26 @@
+<section class="center">
+
+    <h2 class="subheader">Inicio de Sesión</h2>
+
+    <form #loginForm="ngForm" class="mid-form">
+         <div class="form-group">
+             <label for="username">Nombre de Usuario</label>
+             <input type="text" name="username" #username="ngModel" [(ngModel)]="user.username" />
+         </div>
+
+         <div class="form-group">
+             <label for="password">Contraseña</label>
+             <input type="password" name="password"  #password="ngModel" [(ngModel)]="user.password" />
+         </div>
+
+         <div class="clearfix"></div>
+
+         <button (click)="submitLogin($event)" class="btn btn-success" >Entrar</button>
+
+         <div *ngIf="errors.length > 0" class="alert-danger">
+            <p *ngFor="let error of errors">{{error}}</p>
+        </div>
+
+    </form>
+ 
+</section>

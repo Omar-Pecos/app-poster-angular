@@ -1,0 +1,89 @@
+<!-- Botones de login/register -->
+<div *ngIf="!identity" class="btn-row">
+    <a  class="btn btn-action" (click)="changeHomeAction('login')">Inicia Sesión</a>
+    <a  class="btn btn-action" (click)="changeHomeAction('register')">Regístrate</a>
+</div>
+
+<div *ngIf="homeAction == 'none'" id="slider" class="slider-big">
+    <h1>Un blog de Recetas,Programacion,Arte...</h1>
+    <div class="btn-row">
+        <a href="#" class="btn btn-success">Posts</a>
+        <a href="#" class="btn btn-success">Categorias</a>
+    </div>
+</div>
+
+<div *ngIf="homeAction == 'login'" id="slider" class="slider-fluid">
+        <app-login
+            (sendToApp)="dataFromLogin($event)"
+        ></app-login>
+</div>
+
+<div *ngIf="homeAction == 'register'" id="slider" class="slider-fluid">
+    <app-register
+        (sendToApp)="dataFromRegister($event)"
+    ></app-register>
+</div>
+
+<div class="center">
+    <section  id="content">
+        <h2 class="subheader">Últimos artículos</h2>
+
+        <script type="text/javascript">
+            window.addEventListener("load", function () {
+                var template = document.getElementById("article-template");
+                var articles = document.getElementById("articles");
+
+                for (var i = 1; i <= 5; i++) {
+                    var clonado = template.cloneNode(true);
+                    clonado.removeAttribute("id");
+
+                    var h2 = clonado.getElementsByTagName("h2")[0];
+                    h2.innerHTML = h2.textContent + ' ' + i;
+
+                    articles.appendChild(clonado);
+                }
+
+            });
+        </script>
+
+        <!--Listado articulos-->
+        <div id="articles">
+            <article class="article-item" id="article-template">
+                <div class="image-wrap">
+                    <img src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8"
+                        alt="Paisaje" />
+                </div>
+
+                <h2>Articulo de prueba</h2>
+                <span class="date">
+                    Hace 5 minutos
+                </span>
+                <a href="#">Leer más</a>
+
+                <div class="clearfix"></div>
+            </article>
+
+            <!--AÑADIR ARTICULOS VIA JS-->
+
+        </div>
+
+    </section>
+
+    <aside id="sidebar">
+            <div *ngIf="identity" id="nav-blog" class="sidebar-item">
+                <h3>Sé parte del blog</h3>
+                <a href="#" class="btn btn-success">Crear post</a>
+            </div>
+
+        <div id="search" class="sidebar-item">
+            <h3>Buscador</h3>
+            <p>Encuentra el post que buscas</p>
+            <form>
+                <input type="text" name="search" />
+                <input type="submit" name="submit" value="Buscar" class="btn" />
+            </form>
+        </div>
+    </aside>
+
+    <div class="clearfix"></div>
+</div>
