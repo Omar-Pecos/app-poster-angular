@@ -1,0 +1,35 @@
+
+
+<!--Listado articulos-->
+<div *ngIf="posts" id="articles">
+   
+        <article *ngFor="let post of posts" class="article-item" id="article-template">
+            <div class="image-wrap">
+                <img src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
+            </div>
+
+            <h2>{{post.title}}</h2>
+            <small>{{post.author}}</small>
+            <p>
+                <span class="badge" [ngClass]="{ 
+                    'badge-black' : post.theme === 'Prog',
+                    'badge-brown' : post.theme === 'Arte',
+                    'badge-green' : post.theme === 'Recetas'
+                }">{{post.theme}}</span>
+                <span class="badge" [ngClass]="{ 
+                    'badge-black' : post.theme === 'Prog',
+                    'badge-brown' : post.theme === 'Arte',
+                    'badge-green' : post.theme === 'Recetas'
+                }"><small>Categoría : {{post.category}}</small></span>
+            </p>
+            
+            <span class="date">
+                {{post.date | amLocale : 'es' | amTimeAgo}}
+            </span>
+            <a [routerLink]="['/post', post._id]">Ver Post</a>
+
+            <div class="clearfix"></div>
+        </article>
+
+</div>
+

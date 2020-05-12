@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit {
         this.identity = response;
         localStorage.setItem('identity',JSON.stringify(this.identity));
 
-        // si todo va bien - sendToApp que la action es none (por default)
+        // si todo va bien - sendToApp que la action es inicio (por default)
         this.sendToApp.emit({
-          action : 'none',
+          action : 'inicio',
           username : this.user.username
         });
 

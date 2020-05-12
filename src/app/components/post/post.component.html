@@ -1,0 +1,74 @@
+<slider
+ size='small' [title]='title'
+ ></slider>
+
+<div class="center">
+    <section id="content">
+
+        <div *ngIf="!post">
+            <h2 class="subheader">Cargando ...</h2>
+            <img src="assets/images/loading.gif" />
+        </div>
+
+        <article *ngIf="post" class="article-item article-detail">
+            <div class="image-wrap">
+                <img src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
+            </div>
+
+            <h1 class="subheader">{{post.title}}</h1>
+            <span class="date">
+               {{post.date | amLocale : 'es' | amTimeAgo}}
+            </span>
+
+            <div class="btn-row">
+                <button (click)="openModal(0)" class="btn btn-action">
+                    <img src="https://img.icons8.com/plasticine/100/000000/reading.png"/>&nbsp;Leer
+                </button>
+                <button class="btn btn-action">
+                    <img src="https://img.icons8.com/plasticine/100/000000/youtube-play.png"/>&nbsp;Vídeo
+                </button>
+                <button class="btn btn-action">
+                    <img src="https://img.icons8.com/plasticine/100/000000/window-search.png"/>&nbsp;Similares
+                </button>
+            </div>
+            
+         <!-- con indentity    <hr/>
+             <div class="btn-row">
+                <button style="border : 4px solid orange" class="btn btn-warning">Editar</button>
+                <button style="border:  4px solid red" class="btn btn-danger">Eliminar</button>
+            </div> -->
+
+            <div class="clearfix"></div>
+        </article>
+
+    </section>
+
+    <sidebar></sidebar>
+
+    <div class="clearfix"></div>
+</div>
+
+<!-- Modal -->
+
+<div *ngIf="modal" id="myModal" class="modal">
+
+    <div class="modal-content">
+        <div class="modal-header">
+          <span (click)="closeModal()" class="close alert-danger">&times;</span>
+          <h2>{{ pos }}º</h2>
+        </div>
+        <div class="modal-body">
+
+          <div [innerHTML]="viewingContent">
+                
+          </div>
+
+        </div>
+        <div class="modal-footer btn-row">
+            <a *ngIf="(pos+1) < content.length" (click)="next()" class="btn btn-action">Siguiente</a>
+           <!-- con identity <a class="btn btn-action">Fav</a>
+            <a class="btn btn-action">Guardar progreso</a>  -->
+        </div>
+      </div>
+  
+  </div>

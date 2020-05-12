@@ -1,5 +1,6 @@
 import { Component,DoCheck } from '@angular/core';
 import {UserService} from '../../services/user.service';
+import {ActivatedRoute,Params} from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -8,18 +9,35 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './home.component.html',
   providers : [UserService]
 })
-export class HomeComponent implements DoCheck {
+export class HomeComponent {
 
   public token;
   public identity;
-  public homeAction = 'none';s
+  public homeAction = 'inicio';
+  public logued;
 
   constructor(
+      private _route : ActivatedRoute,
       private _userService : UserService,
       private toastr : ToastrService
   ){
+    //Ver si desde otro componente piden el login o register
+      this._route.params.subscribe(params =>{
+        
+        let parametro = params['route'];
+        
+        if (parametro){
+          this.changeHomeAction(parametro);
+        }
+      });
+
       this.token = this._userService.getToken();
       this.identity = this._userService.getIdentity();
+      if (this.token){
+        this.logued = true;
+      }else{
+        this.logued = false;
+      }
   }
 
   changeHomeAction(action){
@@ -29,6 +47,11 @@ export class HomeComponent implements DoCheck {
   ngDoCheck(){
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
+     if (this.token){
+        this.logued = true;
+      }else{
+        this.logued = false;
+      }
   }
 
   dataFromLogin($event){

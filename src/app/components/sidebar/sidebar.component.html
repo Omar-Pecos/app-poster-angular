@@ -1,0 +1,24 @@
+<aside id="sidebar">
+    <div *ngIf="logued" id="nav-blog" class="sidebar-item">
+        <h3>Sé parte del blog</h3>
+        <a href="#" class="btn btn-success">Crear post</a>
+    </div>
+
+    <div id="search" class="sidebar-item">
+        <h3>Temas</h3>
+        <div class="btn-row">
+           <span [routerLink]="['/blog/theme/Recetas']" class="badge badge-green">Recetas</span>
+           <span [routerLink]="['/blog/theme/Prog']" class="badge badge-black">Programación</span>
+           <span  [routerLink]="['/blog/theme/Arte']" class="badge badge-brown">Arte</span>
+        </div>
+    </div>
+
+<div id="search" class="sidebar-item">
+    <h3>Buscador</h3>
+    <p>Encuentra el post que buscas</p>
+    <form>
+        <input type="text" name="search" />
+        <input type="submit" name="submit" value="Buscar" class="btn" />
+    </form>
+</div>
+</aside>

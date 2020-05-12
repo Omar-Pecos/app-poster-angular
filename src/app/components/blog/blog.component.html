@@ -1,0 +1,22 @@
+
+<slider
+    size='small'
+    [title]='title'
+></slider>
+
+<div class="center">
+    <section  id="content">
+
+        <h2 class="subheader">Posts</h2>
+        <app-posts
+                [filter]="filter"
+                [value]="value"
+        ></app-posts>
+
+    </section>
+
+    <sidebar></sidebar>
+
+    <div class="clearfix"></div>
+</div>
+

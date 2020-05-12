@@ -3,7 +3,7 @@
         <!-- LOGO -->
         <div id="logo">
             <img src="https://img.icons8.com/color/48/000000/chocolate-tree.png" class="app-logo" alt="Logotipo" />
-            <span id="brand">
+            <span  [routerLink]="['/home/inicio']" id="brand">
                 <strong>Poster</strong>App
             </span>
         </div>
@@ -22,6 +22,18 @@
                 </li>
                 <li>
                     <a (click)="logout()">Salir</a>
+                </li>
+            </ul>
+
+            <ul *ngIf="!identity" >
+                <li>
+                    <a [routerLink]="['/home/inicio']">Inicio</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/home/login']">Login</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/home/register']">Registro</a>
                 </li>
             </ul>
         </nav>

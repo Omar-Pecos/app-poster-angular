@@ -1,0 +1,35 @@
+<slider 
+    size='small' title='Categorías'>
+</slider>
+
+
+<div class="center">
+    <section *ngIf="status" id="content">
+        <h1>Recetas</h1>
+        <div class="btn-row">
+                <span *ngFor="let cat of catsRecetas" class="badge badge-green" [routerLink]="['/blog/category/' + cat.name]">
+                    <b>{{cat.name}}</b>
+                </span>
+        </div>
+
+        <h1>Programación</h1>
+        <div class="btn-row">
+            
+                <span *ngFor="let cat of catsProg" class="badge badge-black">
+                    <b>{{cat.name}}</b>
+                </span>
+        </div>
+
+        <h1>Arte</h1>
+        <div class="btn-row">
+                <span *ngFor="let cat of catsArte" class="badge badge-brown">
+                    <b>{{cat.name}}</b>
+                </span>
+        </div>
+
+    </section>
+
+    <sidebar></sidebar>
+
+    <div class="clearfix"></div>
+</div>

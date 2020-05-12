@@ -3,11 +3,17 @@
  import {Routes, RouterModule} from '@angular/router'
 
  import {HomeComponent} from './components/home/home.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { BlogComponent } from './components/blog/blog.component';
+import { PostComponent } from './components/post/post.component';
 
  // Array de rutas
  const appRoutes : Routes = [
-     {path : '', component : HomeComponent},
-     {path : 'home', component : HomeComponent},
+     {path : '',redirectTo: 'home/inicio', pathMatch: 'full'},
+     {path : 'home/:route', component : HomeComponent},
+     {path: 'categorias', component : CategoriesComponent},
+     {path : 'blog/:filter/:value', component : BlogComponent},
+     {path : 'post/:id' , component : PostComponent}
     // {path : 'register',component : RegisterComponent},
     // {path : 'login', component : LoginComponent}
  ];
