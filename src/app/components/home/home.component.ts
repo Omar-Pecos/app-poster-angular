@@ -1,6 +1,6 @@
 import { Component,DoCheck } from '@angular/core';
 import {UserService} from '../../services/user.service';
-import {ActivatedRoute,Params} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 

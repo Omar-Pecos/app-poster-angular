@@ -29,10 +29,36 @@ export class PostService{
        
         return this._http.get(this.URL + 'filterposts' + urlParam);
     }
-    getCategories() : Observable<any>{
-        return this._http.get(this.URL + 'category');
-    }
+    
     getPost(id) : Observable<any>{
         return this._http.get(this.URL + 'post/'+ id);
     }
+
+    /* CATS */
+    getCategories() : Observable<any>{
+        return this._http.get(this.URL + 'category');
+    }
+   /* la ruta de la API tampoco hace falta 
+    getCategory(name) : Observable<any>{
+        return this._http.get(this.URL + 'cat/'+name);
+    }*/
+
+    createCategory(token,name,theme) : Observable<any>{
+        let headers = new HttpHeaders()
+            .set('x-access-token',token);
+        return this._http.post(this.URL + 'category/create',{name,theme},{headers : headers});
+    }
+
+    editCategory(token,id,name,theme) : Observable<any>{
+        let headers = new HttpHeaders()
+            .set('x-access-token',token);
+        return this._http.put(this.URL + 'category/edit/'+id,{name,theme},{headers : headers});
+    }
+
+    deleteCategory(token,id) : Observable<any>{
+        let headers = new HttpHeaders()
+            .set('x-access-token',token);
+        return this._http.delete(this.URL + 'category/delete/'+id,{headers : headers});
+    }
+
 }

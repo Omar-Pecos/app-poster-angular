@@ -19,8 +19,8 @@ export class SidebarComponent implements OnInit ,OnChanges{
   }
 
   ngOnChanges(changes : SimpleChanges){
-    console.log("changes!!");
-    console.log(changes.logued);
+   /* console.log("changes!!");
+    console.log(changes.logued);*/
 
     if (changes.logued.currentValue == true){
       this.displayCreate = true

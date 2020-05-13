@@ -1,35 +1,148 @@
-<slider 
-    size='small' title='Categorías'>
+<slider size='small' title='Categorías'>
 </slider>
 
 
 <div class="center">
+
+    <div *ngIf="identity && identity.role == '1'" class="btn-row">
+        <a (click)="openCreateModal()" class="btn btn-action">+ Crear nueva</a>
+    </div>
+
     <section *ngIf="status" id="content">
         <h1>Recetas</h1>
         <div class="btn-row">
-                <span *ngFor="let cat of catsRecetas" class="badge badge-green" [routerLink]="['/blog/category/' + cat.name]">
+
+            <div *ngFor="let cat of catsRecetas" class="btn-column">
+                <span class="badge badge-green" [routerLink]="['/blog/category/' + cat.name]">
                     <b>{{cat.name}}</b>
                 </span>
+                <span *ngIf="identity && identity.role == '1'"
+                    style="border-radius: 7px;margin-top: 2px;background: #c1c1c1;">
+                    <img (click)="openEditModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/edit.png" /> &nbsp;
+                    <img (click)="openDeleteModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/filled-trash.png" />
+                </span>
+            </div>
+
         </div>
 
         <h1>Programación</h1>
         <div class="btn-row">
-            
-                <span *ngFor="let cat of catsProg" class="badge badge-black">
+            <div *ngFor="let cat of catsProg" class="btn-column">
+                <span class="badge badge-black">
                     <b>{{cat.name}}</b>
                 </span>
+                <span *ngIf="identity && identity.role == '1'"
+                    style="border-radius: 7px;margin-top: 2px;background: #c1c1c1;">
+                    <img (click)="openEditModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/edit.png" /> &nbsp;
+                    <img (click)="openDeleteModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/filled-trash.png" />
+                </span>
+            </div>
         </div>
 
         <h1>Arte</h1>
         <div class="btn-row">
-                <span *ngFor="let cat of catsArte" class="badge badge-brown">
+            <div *ngFor="let cat of catsArte" class="btn-column">
+                <span  class="badge badge-brown">
                     <b>{{cat.name}}</b>
                 </span>
+                <span *ngIf="identity && identity.role == '1'"
+                    style="border-radius: 7px;margin-top: 2px;background: #c1c1c1;">
+                    <img (click)="openEditModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/edit.png" /> &nbsp;
+                    <img (click)="openDeleteModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/filled-trash.png" />
+                </span>
+            </div>
         </div>
 
     </section>
 
-    <sidebar></sidebar>
+    <sidebar [logued]="logued"></sidebar>
 
     <div class="clearfix"></div>
+</div>
+
+<!-- Create Modal -->
+<div *ngIf="createModal" id="myModal" class="modal">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <span (click)="closeModal('create')" class="close alert-danger">&times;</span>
+            <h2>Crear Categoría</h2>
+        </div>
+        <div class="modal-body">
+            <form #createCategory="ngForm" class="mid-form">
+                <div class="form-group">
+                    <label>Tema</label>
+                    <select name="selectTema" [(ngModel)]="selectTema" required>
+                        <option value="Prog">Programación</option>
+                        <option value="Recetas">Recetas</option>
+                        <option value="Arte">Arte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nombre de Categoría</label>
+                    <input type="text" name="nombreCat" [(ngModel)]="nombreCat" required />
+                </div>
+                <input type="submit" (click)="createCat($event)" value="Crear" class="btn btn-action">
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Edit Modal -->
+<div *ngIf="editModal" id="myModal" class="modal">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <span (click)="closeModal('edit')" class="close alert-danger">&times;</span>
+            <h2>Editar Categoría</h2>
+        </div>
+        <div class="modal-body">
+            <form #editCategory="ngForm" class="mid-form">
+                <div class="form-group">
+                    <label>Tema</label>
+                    <select name="selectTema" [value]="selectTema" [(ngModel)]="selectTema" required>
+                        <option value="Prog">Programación</option>
+                        <option value="Recetas">Recetas</option>
+                        <option value="Arte">Arte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nombre de Categoría</label>
+                    <input type="text" name="nombreCat" [value]="nombreCat" [(ngModel)]="nombreCat" required />
+                </div>
+                <input type="submit" (click)="editCat($event)" value="Editar" class="btn btn-action">
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Edit Modal -->
+<div *ngIf="deleteModal" id="myModal" class="modal">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <span (click)="closeModal('delete')" class="close alert-danger">&times;</span>
+            <h2>¿Eliminar Categoría?</h2>
+        </div>
+        <div class="modal-body">
+            <h4>¿Desea realmente eliminar la categoria "{{nombreCat}}"?</h4>
+        </div>
+        <div class="modal-footer">
+            <span class="btn-row">
+                <a (click)="closeModal('delete')" class="btn btn-white">Cancelar</a>&nbsp;
+                <a (click)="deleteCat()" class="btn btn-danger">Eliminar</a>
+            </span>
+        </div>
+    </div>
+
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { error } from 'protractor';
 
@@ -7,7 +7,7 @@ import { error } from 'protractor';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit,OnChanges {
 
   public posts;
   @Input() last;
@@ -40,6 +40,20 @@ export class PostsComponent implements OnInit {
  /* ngDoCheck(){
     this.comprobarParamsUrl();
   }*/
+
+  ngOnChanges(simpleChanges : SimpleChanges){
+  
+    if (simpleChanges.filter){
+      if (simpleChanges.filter.currentValue != simpleChanges.filter.previousValue || simpleChanges.value.currentValue != simpleChanges.value.previousValue ){
+        this.comprobarParamsUrl();
+      }
+    }else{
+      if ( simpleChanges.value.currentValue != simpleChanges.value.previousValue ){
+        this.comprobarParamsUrl();
+      }
+    }
+    
+  }
 
   getPosts(lastValue){
       this._postService.getPosts(lastValue).subscribe(
