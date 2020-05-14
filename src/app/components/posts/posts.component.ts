@@ -47,7 +47,7 @@ export class PostsComponent implements OnInit,OnChanges {
       if (simpleChanges.filter.currentValue != simpleChanges.filter.previousValue || simpleChanges.value.currentValue != simpleChanges.value.previousValue ){
         this.comprobarParamsUrl();
       }
-    }else{
+    }else if (simpleChanges.value){
       if ( simpleChanges.value.currentValue != simpleChanges.value.previousValue ){
         this.comprobarParamsUrl();
       }

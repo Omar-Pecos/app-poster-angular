@@ -19,9 +19,12 @@
     "@angular/platform-browser": "~9.1.6",
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
+    "@tinymce/tinymce-angular": "^3.5.2",
     "angular2-moment": "^1.9.0",
+    "dompurify": "^2.0.11",
     "ngx-toastr": "^12.0.1",
     "rxjs": "~6.5.4",
+    "tinymce": "^5.2.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

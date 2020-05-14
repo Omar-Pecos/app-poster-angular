@@ -183,13 +183,14 @@ body {
 .btn{
    display: block;
    background: #000000;
-   color: white;
+   color: white !important;
    border-radius: 10px;
    padding: 15px; 
    font-weight: bold;
    text-transform: uppercase;
+   text-align: center;
    font-size: 14px;
-   text-decoration: none;
+   text-decoration: none !important;
    max-width: 120px;
    transition: 300ms all;
    border: none;
@@ -332,7 +333,7 @@ textarea{
 .article-detail .image-wrap{
     float:none;
     width:100%;
-    height: 300px;
+    height: 500px;
 }
 
 .article-detail .image-wrap img{
@@ -470,7 +471,28 @@ textarea{
     cursor: pointer;
   }
 
+  .contenidos{
+      text-align: left !important;
+      border : 3px solid #5cb85c;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 15px;
+  }
 
+  .flechaIzq{
+    transform : rotateZ(90deg);
+      width: 30px;
+  }
+  .flechaDer{
+    transform: rotateZ(-90deg);
+    width: 30px;
+}
+
+.thumbnail{
+    width: auto !important;
+    max-width: 130px !important;
+
+}
 
 /*RESPONSIVE*/
 

@@ -12,13 +12,13 @@
         <nav id="menu">
             <ul *ngIf="identity" >
                 <li>
-                    <a href="index.html">Inicio</a>
+                    <a [routerLink]="['/home/inicio']">Inicio</a>
                 </li>
                 <li>
-                    <a href="blog.html">Blog</a>
+                    <a [routerLink]="['/blog/posts/todos']">Posts</a>
                 </li>
                 <li>
-                    <a href="formulario.html">Formulario</a>
+                    <a [routerLink]="['/categorias']">Categorías</a>
                 </li>
                 <li>
                     <a (click)="logout()">Salir</a>
@@ -28,6 +28,12 @@
             <ul *ngIf="!identity" >
                 <li>
                     <a [routerLink]="['/home/inicio']">Inicio</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/blog/posts/todos']">Posts</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/categorias']">Categorías</a>
                 </li>
                 <li>
                     <a [routerLink]="['/home/login']">Login</a>

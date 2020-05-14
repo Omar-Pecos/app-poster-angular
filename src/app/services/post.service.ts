@@ -17,6 +17,7 @@ export class PostService{
         this.URL = Global.url;
     }
 
+    /* POSTS */
     getPosts(last): Observable<any>{
         let urlParam = '';
         if (last == 'true'){
@@ -32,6 +33,12 @@ export class PostService{
     
     getPost(id) : Observable<any>{
         return this._http.get(this.URL + 'post/'+ id);
+    }
+
+    createPost(token,post){
+        let headers = new HttpHeaders()
+            .set('x-access-token', token);
+        return this._http.post(this.URL + 'posts/create', post , {headers : headers});
     }
 
     /* CATS */

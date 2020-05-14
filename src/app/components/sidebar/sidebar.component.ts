@@ -1,11 +1,11 @@
-import { Component,OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { Component,OnInit, OnChanges, Input, DoCheck } from '@angular/core';
 
 @Component({
   selector: 'sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit ,OnChanges{
+export class SidebarComponent implements OnInit ,DoCheck{
 
   @Input() logued;
   public displayCreate = false;
@@ -13,21 +13,41 @@ export class SidebarComponent implements OnInit ,OnChanges{
   }
 
   ngOnInit(): void {
-    if (this.logued){
+    if (this.logued == true){
       this.displayCreate = true;
-    }
-  }
-
-  ngOnChanges(changes : SimpleChanges){
-   /* console.log("changes!!");
-    console.log(changes.logued);*/
-
-    if (changes.logued.currentValue == true){
-      this.displayCreate = true
     }else{
       this.displayCreate = false;
     }
   }
+  
+ngDoCheck(){
+  if (this.logued == true){
+    this.displayCreate = true;
+  }else{
+    this.displayCreate = false;
+  }
+}
+  
+
+ /* ngOnChanges(changes : SimpleChanges){
+    console.log(changes);
+   /* console.log("changes!!");
+    
+
+    if (changes.logued.currentValue === true){
+      this.displayCreate = true;
+    }else{
+      this.displayCreate = false;
+    }
+
+    if (changes.logued.currentValue != changes.logued.previousValue){
+      if (changes.logued.currentValue == true){
+        this.displayCreate = true;
+      }else{
+        this.displayCreate = false;
+      }
+    }
+  }*/
 
 
 }

@@ -1,7 +1,7 @@
 <aside id="sidebar">
-    <div *ngIf="logued" id="nav-blog" class="sidebar-item">
+    <div *ngIf="displayCreate" id="nav-blog" class="sidebar-item">
         <h3>Sé parte del blog</h3>
-        <a href="#" class="btn btn-success">Crear post</a>
+        <a [routerLink]="['/crear']" class="btn btn-success">Crear post</a>
     </div>
 
     <div id="search" class="sidebar-item">

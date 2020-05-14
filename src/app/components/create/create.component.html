@@ -1,0 +1,88 @@
+<slider size='small' title='Crear nuevo Post'></slider>
+
+<div class="center">
+    <section id="content">
+             <br/>
+        <form #createForm="ngForm" class="mid-form">
+            <div class="form-group">
+                <label for="title">Título</label>
+                <input type="text" name="title" #title="ngModel" [(ngModel)]="post.title" />
+            </div>
+    
+             <div class="form-group">
+                 <label for="url_image">Direccion de Imagen Principal</label>
+                 <input type="text" name="url_image" #url_image="ngModel" [(ngModel)]="post.url_image" />
+             </div>
+    
+             <div class="form-group">
+                <label for="url_yt">Url de vídeo</label>
+                <input type="text" name="url_yt" #url_yt="ngModel" [(ngModel)]="post.url_yt" />
+            </div>
+    
+             <div class="form-group">
+                 <label for="theme">Tema</label>
+                 <input type="text" name="theme"  #theme="ngModel" [(ngModel)]="post.theme" />
+             </div>
+    
+             <div class="form-group">
+                <label for="category">Categoría</label>
+                <input type="text" name="category" [(ngModel)]="post.category"/>
+            </div>
+    
+             <div class="clearfix"></div>
+    
+             <button (click)="submitPost($event)" class="btn btn-success" [disabled]="post.content.length == 0" >Crear</button>
+    
+            <div *ngIf="errors.length > 0" class="alert-danger">
+                <p *ngFor="let error of errors">{{error}}</p>
+            </div>
+
+            <div style="margin:2px;background: orange;" class="alert-danger">
+                <p>Para guardar la sección, pulse en Nueva sección y fíjese que se visualize debajo de este formulario</p>
+            </div>
+        </form>
+
+        <div *ngFor="let seccion of post.content;index as i" class="contenidos">
+           <span>
+            <small class="badge badge-black">Sección {{ (i+1) }}º </small>
+            <img (click)="deleteSeccion(i)" style="width: 30px;position:relative;top:10px"
+            src="https://img.icons8.com/plasticine/100/000000/filled-trash.png" />
+           </span> 
+            <div  [innerHTML]="seccion | safeHtml"></div>
+        </div>
+
+        <h3 class="subheader">Editor de contenidos</h3>
+        <editor [(ngModel)]="dataModel" [init]="{
+            height: 500,
+            menubar: false,
+            plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar:
+            'undo redo | formatselect  | image |  bold italic backcolor | \
+            alignleft aligncenter alignright alignjustify | \
+            bullist numlist outdent indent | removeformat | code | help'
+        }"></editor>
+
+        <div class="btn-row">
+            <a *ngIf="edicion" (click)="guardarEdicion(secToEdit)" class="btn btn-action">Guardar edición</a>
+            <a (click)="nuevaSeccion()" class="btn btn-action">Nueva sección</a>
+
+            <span *ngIf="post.content.length > 0">
+                <a (click)="editarSeccion(secToEdit)" class="btn btn-action">Seleccionar sección</a>
+                <select [(ngModel)]="secToEdit">
+                    <option *ngFor="let opt of post.content;index as i" [value]="i" >{{ (i+1) }}</option>
+                </select>
+            </span>
+        </div>
+
+       <!--<h1>Output</h1>
+        <div [innerHTML]="dataModel | safeHtml"></div>  --> 
+    </section>
+
+    <sidebar [logued]="logued"></sidebar>
+
+    <div class="clearfix"></div>
+</div>

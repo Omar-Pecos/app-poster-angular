@@ -6,6 +6,7 @@
 import { CategoriesComponent } from './components/categories/categories.component';
 import { BlogComponent } from './components/blog/blog.component';
 import { PostComponent } from './components/post/post.component';
+import { CreateComponent } from './components/create/create.component';
 
  // Array de rutas
  const appRoutes : Routes = [
@@ -13,7 +14,8 @@ import { PostComponent } from './components/post/post.component';
      {path : 'home/:route', component : HomeComponent},
      {path: 'categorias', component : CategoriesComponent},
      {path : 'blog/:filter/:value', component : BlogComponent},
-     {path : 'post/:id' , component : PostComponent}
+     {path : 'post/:id' , component : PostComponent},
+     {path : 'crear', component : CreateComponent}
     // {path : 'register',component : RegisterComponent},
     // {path : 'login', component : LoginComponent}
  ];

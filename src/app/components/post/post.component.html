@@ -12,7 +12,8 @@
 
         <article *ngIf="post" class="article-item article-detail">
             <div class="image-wrap">
-                <img src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
+                <img (load)="onLoadImg()" id="image" *ngIf="post.url_image" [src]="post.url_image" alt="post.title" />
+                <img (load)="onLoadImg()" id="image" *ngIf="!post.url_image" src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
             </div>
 
             <h1 class="subheader">{{post.title}}</h1>
@@ -20,30 +21,35 @@
                {{post.date | amLocale : 'es' | amTimeAgo}}
             </span>
 
+
+            <div *ngIf="identity.id == post.user_id" class="btn-row">
+               <button style="border : 4px solid orange" class="btn btn-warning">Editar</button>
+               <button style="border:  4px solid red" class="btn btn-danger">Eliminar</button>
+           </div>      
+
+               <hr/>
+
             <div class="btn-row">
-                <button (click)="openModal(0)" class="btn btn-action">
+                <a (click)="openModal(0)" class="btn btn-action">
                     <img src="https://img.icons8.com/plasticine/100/000000/reading.png"/>&nbsp;Leer
-                </button>
-                <button class="btn btn-action">
+                </a>
+                <a *ngIf="post.url_yt" (click)="openInNewTab(post.url_yt)" class="btn btn-action">
                     <img src="https://img.icons8.com/plasticine/100/000000/youtube-play.png"/>&nbsp;Vídeo
-                </button>
-                <button class="btn btn-action">
+                </a>
+                <a (click)="openInNewTab('https://www.youtube.com/results?search_query=' + post.title)"  class="btn btn-action">
                     <img src="https://img.icons8.com/plasticine/100/000000/window-search.png"/>&nbsp;Similares
-                </button>
+                </a>
             </div>
             
-         <!-- con indentity    <hr/>
-             <div class="btn-row">
-                <button style="border : 4px solid orange" class="btn btn-warning">Editar</button>
-                <button style="border:  4px solid red" class="btn btn-danger">Eliminar</button>
-            </div> -->
 
             <div class="clearfix"></div>
         </article>
 
     </section>
 
-    <sidebar></sidebar>
+    <sidebar
+        [logued]="logued"
+    ></sidebar>
 
     <div class="clearfix"></div>
 </div>
@@ -55,19 +61,25 @@
     <div class="modal-content">
         <div class="modal-header">
           <span (click)="closeModal()" class="close alert-danger">&times;</span>
-          <h2>{{ pos }}º</h2>
+          <h2>{{ (pos+1) }}º</h2>
         </div>
         <div class="modal-body">
 
-          <div [innerHTML]="viewingContent">
+          <div style="text-align: left;" [innerHTML]="viewingContent | safeHtml">
                 
           </div>
 
         </div>
         <div class="modal-footer btn-row">
-            <a *ngIf="(pos+1) < content.length" (click)="next()" class="btn btn-action">Siguiente</a>
-           <!-- con identity <a class="btn btn-action">Fav</a>
-            <a class="btn btn-action">Guardar progreso</a>  -->
+            <a *ngIf="pos < content.length && pos != 0" (click)="previous()" class="btn btn-action">
+                <img class="flechaIzq" src="https://img.icons8.com/plasticine/100/000000/circled-chevron-down.png"/>
+            </a>
+            <a *ngIf="(pos+1) < content.length" (click)="next()" class="btn btn-action">
+                <img class="flechaDer" src="https://img.icons8.com/plasticine/100/000000/circled-chevron-down.png"/>
+            </a>
+                &nbsp;
+           <a *ngIf="identity" class="btn btn-action">NoFav</a>
+           <a *ngIf="identity" class="btn btn-action">Guardar progreso</a>
         </div>
       </div>
   
