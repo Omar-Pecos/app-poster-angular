@@ -17,12 +17,13 @@
             </div>
 
             <h1 class="subheader">{{post.title}}</h1>
+            <h3>{{post.author}}</h3>
             <span class="date">
                {{post.date | amLocale : 'es' | amTimeAgo}}
             </span>
 
 
-            <div *ngIf="identity.id == post.user_id" class="btn-row">
+            <div *ngIf="identity && (identity.id == post.user_id || identity.role == 1 )" class="btn-row">
                <button style="border : 4px solid orange" class="btn btn-warning">Editar</button>
                <button style="border:  4px solid red" class="btn btn-danger">Eliminar</button>
            </div>      
@@ -30,8 +31,10 @@
                <hr/>
 
             <div class="btn-row">
-                <a (click)="openModal(0)" class="btn btn-action">
-                    <img src="https://img.icons8.com/plasticine/100/000000/reading.png"/>&nbsp;Leer
+                <a (click)="openModal(pos)" class="btn btn-action">
+                    <img src="https://img.icons8.com/plasticine/100/000000/reading.png"/>&nbsp;
+                    <b *ngIf="pos == 0">Leer</b> 
+                    <b *ngIf="pos != 0">Continuar</b>
                 </a>
                 <a *ngIf="post.url_yt" (click)="openInNewTab(post.url_yt)" class="btn btn-action">
                     <img src="https://img.icons8.com/plasticine/100/000000/youtube-play.png"/>&nbsp;Vídeo
@@ -40,7 +43,6 @@
                     <img src="https://img.icons8.com/plasticine/100/000000/window-search.png"/>&nbsp;Similares
                 </a>
             </div>
-            
 
             <div class="clearfix"></div>
         </article>
@@ -65,7 +67,7 @@
         </div>
         <div class="modal-body">
 
-          <div style="text-align: left;" [innerHTML]="viewingContent | safeHtml">
+          <div id="contenido" style="text-align: left;" [innerHTML]="viewingContent | safeHtml">
                 
           </div>
 
@@ -77,9 +79,18 @@
             <a *ngIf="(pos+1) < content.length" (click)="next()" class="btn btn-action">
                 <img class="flechaDer" src="https://img.icons8.com/plasticine/100/000000/circled-chevron-down.png"/>
             </a>
+
                 &nbsp;
-           <a *ngIf="identity" class="btn btn-action">NoFav</a>
-           <a *ngIf="identity" class="btn btn-action">Guardar progreso</a>
+
+                <!-- noFav -->
+                <a *ngIf=" identity && !post.favorites[identity.username]" (click)="doFav()">
+                    <img width="50" src="https://img.icons8.com/plasticine/100/000000/like--v2.png"/>
+                 </a>
+                 <!-- Fav -->
+                 <a *ngIf="identity && post.favorites[identity.username]" (click)="undoFav()" >
+                    <img  width="50" src="https://img.icons8.com/plasticine/100/000000/like--v1.png"/>
+                  </a>
+                <a *ngIf="identity" class="btn btn-action" (click)="saveProgress()">Guardar progreso</a>
         </div>
       </div>
   

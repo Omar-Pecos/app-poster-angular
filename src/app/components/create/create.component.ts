@@ -5,6 +5,11 @@ import {PostService} from '../../services/post.service';
 import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/post';
 
+//Prism
+//const Prism = require('../../../assets/js/prism.js');
+//import {Prism} from '../../../assets/js/prism';
+//import Prism from 'prismjs';
+import Prism from '../../../assets/js/prism';
 
 
 @Component({
@@ -19,9 +24,10 @@ export class CreateComponent implements OnInit,DoCheck{
   public errors = [];
 
   public post : Post;
+  public cats;
   public dataModel;
   public edicion;
-  public secToEdit;
+  public secToEdit = 0;
 
   constructor(
     private _router : Router,
@@ -32,8 +38,7 @@ export class CreateComponent implements OnInit,DoCheck{
 
   ngOnInit(): void {
 
-    this.post = new Post('','',[],'','','','','','',{});
-    console.log(this.post);
+    this.post = new Post('','',[],'','','','-1','-1','',{});
     
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
@@ -52,6 +57,8 @@ export class CreateComponent implements OnInit,DoCheck{
       }else{
         this.logued = false;
       }
+
+     
   }
 
   //guarda a content y vacia el editor
@@ -59,6 +66,8 @@ export class CreateComponent implements OnInit,DoCheck{
     if (this.dataModel != ''){
       this.post.content.push(this.dataModel);
       this.dataModel = '';
+
+      this.cargarEstilosCodigo();
     }
   }
 
@@ -72,6 +81,8 @@ export class CreateComponent implements OnInit,DoCheck{
     this.post.content[pos] = this.dataModel;
     this.dataModel = '';
     this.edicion = false;
+
+    this.cargarEstilosCodigo();
   }
 
   //crear Post enviando el FORM
@@ -92,7 +103,7 @@ export class CreateComponent implements OnInit,DoCheck{
   validate(){
     this.errors = [];
     let post = this.post;
-    if (!post.title ||!post.content ||!post.theme ||!post.category){
+    if (!post.title ||!post.content || post.theme == '-1' || post.category == '-1'){
       this.errors.push('Debe completar todos los campos');
       return false;
     }else{
@@ -122,6 +133,31 @@ export class CreateComponent implements OnInit,DoCheck{
 
   deleteSeccion(pos){
     this.post.content.splice(pos,1);
+  }
+
+  onChangeSelected(){
+    if (this.post.theme != '-1'){
+      //getCats
+      this._postService.getCategoriesByTheme( this.post.theme ).subscribe(
+        response =>{
+          this.cats = response.categories;
+        },
+        error =>{
+          console.log(error);
+        }
+      )
+    }
+  }
+
+  cargarEstilosCodigo (){
+    setTimeout(function () {
+      let regions = document.getElementsByClassName('contenidos');
+      
+      for (let i = 0; i < regions.length ; i++){
+        Prism.highlightAllUnder(regions[i]);
+      }
+      
+    }, 1000);
   }
 
 }

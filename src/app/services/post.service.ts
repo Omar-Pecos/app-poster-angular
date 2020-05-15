@@ -41,9 +41,25 @@ export class PostService{
         return this._http.post(this.URL + 'posts/create', post , {headers : headers});
     }
 
+    favorite(token,postId) : Observable<any>{
+        let headers = new HttpHeaders()
+        .set('x-access-token', token);
+        return this._http.post(this.URL + 'post/favorite', {postId} , {headers : headers});
+    }
+
+    unfavorite(token,postId) : Observable<any>{
+        let headers = new HttpHeaders()
+        .set('x-access-token', token);
+        return this._http.post(this.URL + 'post/unfavorite', {postId} , {headers : headers});
+    }
+
     /* CATS */
     getCategories() : Observable<any>{
         return this._http.get(this.URL + 'category');
+    }
+
+    getCategoriesByTheme(theme) : Observable<any>{
+        return this._http.get(this.URL + 'category/' + theme);
     }
    /* la ruta de la API tampoco hace falta 
     getCategory(name) : Observable<any>{

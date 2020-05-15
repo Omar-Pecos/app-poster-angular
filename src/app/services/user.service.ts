@@ -45,4 +45,24 @@ export class UserService{
             return null;
         }
     }
+
+    /* getUsers */
+    getUser(token,userId) : Observable<any> {
+        let headers = new HttpHeaders()
+            .set('x-access-token',token);
+        return this._http.get(this.URL + 'user/'+userId, {headers});
+    }
+
+    /* Progress */
+    setProgress(token,postId,pos) : Observable<any>{
+        let headers = new HttpHeaders()
+        .set('x-access-token', token);
+        return this._http.post(this.URL + 'users/setprogress', {post_id : postId,content : pos} , {headers : headers});
+    }
+
+    unsetProgress(token,postId) : Observable<any>{
+        let headers = new HttpHeaders()
+        .set('x-access-token', token);
+        return this._http.post(this.URL + 'users/unsetprogress', {post_id : postId} , {headers : headers});
+    }
 }
