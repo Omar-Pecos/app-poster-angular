@@ -7,6 +7,9 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { BlogComponent } from './components/blog/blog.component';
 import { PostComponent } from './components/post/post.component';
 import { CreateComponent } from './components/create/create.component';
+import { EditComponent } from './components/edit/edit.component';
+import { ErrorComponent } from './components/error/error.component';
+import { SearchComponent } from './components/search/search.component';
 
  // Array de rutas
  const appRoutes : Routes = [
@@ -15,7 +18,12 @@ import { CreateComponent } from './components/create/create.component';
      {path: 'categorias', component : CategoriesComponent},
      {path : 'blog/:filter/:value', component : BlogComponent},
      {path : 'post/:id' , component : PostComponent},
-     {path : 'crear', component : CreateComponent}
+     {path : 'crear', component : CreateComponent},
+     {path : 'editar/:id', component : EditComponent},
+     {path : 'buscar/:search', component : SearchComponent},
+     {path : 'error/:code' , component : ErrorComponent},
+     {path : '**' , component : ErrorComponent},
+     
     // {path : 'register',component : RegisterComponent},
     // {path : 'login', component : LoginComponent}
  ];

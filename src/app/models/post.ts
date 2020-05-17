@@ -1,5 +1,6 @@
 export class Post{
     constructor(
+        public _id : String,
         public user_id : String,
         public title : String,
         public content : Array<any>,

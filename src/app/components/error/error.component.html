@@ -1,0 +1,39 @@
+
+<slider
+    size='small'
+    [title]='title'
+></slider>
+
+<div class="center">
+    <section style="margin: 20px 0;" id="content">
+
+        <div *ngIf="code == '0'">
+            <p>El recurso o página que buscas no existe</p>
+            <img src="https://img.icons8.com/plasticine/100/000000/road-closure.png"/>
+        </div>
+
+        <div *ngIf="code == '401'">
+            <p>No está autenticado</p>
+            <img src="https://img.icons8.com/plasticine/100/000000/touch-id.png"/>
+        </div>
+
+        <div *ngIf="code == '403'">
+            <p>No tiene permisos para realizar esta acción</p>
+            <img src="https://img.icons8.com/plasticine/100/000000/security-shield.png"/>
+        </div>
+
+        <div *ngIf="code == '404'">
+            <p>Recurso no existe</p>
+            <img src="https://img.icons8.com/plasticine/100/000000/road-closure.png"/>
+        </div>
+
+        <img src="assets/images/loading.gif" alt="Loading">
+             <br/>
+        <small>Se le redireccionará en unos segundos ...</small>
+
+    </section>
+
+    <sidebar></sidebar>
+
+    <div class="clearfix"></div>
+</div>

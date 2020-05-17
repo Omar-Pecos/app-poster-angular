@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr'
     providers : [UserService]
 })
 export class HeaderComponent implements DoCheck {
+  public dropdown = false;
   public identity;
 
   constructor(
@@ -28,6 +29,14 @@ logout(){
 
      //prueba toastr
      this.toastr.warning( 'Te esperamos de vuelta','¡Adios!');
+  }
+
+  doDropdown(){
+    if (this.dropdown){
+      this.dropdown = false;
+    }else{
+      this.dropdown = true;
+    }
   }
 
 }

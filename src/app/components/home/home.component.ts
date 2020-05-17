@@ -1,5 +1,6 @@
-import { Component,DoCheck } from '@angular/core';
+import { Component} from '@angular/core';
 import {UserService} from '../../services/user.service';
+import { PostService } from '../../services/post.service';
 import {ActivatedRoute} from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
@@ -16,18 +17,27 @@ export class HomeComponent {
   public homeAction = 'inicio';
   public logued;
 
+  public posts;
+  public status = false;
+
   constructor(
       private _route : ActivatedRoute,
       private _userService : UserService,
+      private _postService : PostService,
       private toastr : ToastrService
   ){
+    //get LastPosts
+    this.getPosts('true');
+
     //Ver si desde otro componente piden el login o register
       this._route.params.subscribe(params =>{
         
         let parametro = params['route'];
         
-        if (parametro){
+        if (parametro == 'login' || parametro == 'register'){
           this.changeHomeAction(parametro);
+        }else{
+          this.changeHomeAction('inicio');
         }
       });
 
@@ -39,6 +49,18 @@ export class HomeComponent {
         this.logued = false;
       }
   }
+
+  getPosts(lastValue){
+    this._postService.getPosts(lastValue).subscribe(
+      response =>{
+          this.status = true;
+          this.posts = response.posts;
+      },
+      error =>{
+        console.log(error);
+      }
+    )
+}
 
   changeHomeAction(action){
     this.homeAction = action;

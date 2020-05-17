@@ -448,7 +448,8 @@ textarea{
     width: 90%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     animation-name: animatetop;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    border-radius: 3px;
   }
   
   /* Add Animation */
@@ -494,6 +495,47 @@ textarea{
 
 }
 
+#fav{
+    position: relative;
+    top : -15px;
+    float: right;
+}
+
+#numfavs{
+    color: grey;
+    position: relative;
+    bottom: -6px;
+    right: 2%;
+    float: right;
+}
+
+#dropdown{
+    position: absolute;
+    right: 18vw;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 10px;
+    background-color:#d3ccccd6;
+}
+
+#dropdown ul{
+    line-height: 30px !important;
+    padding-left: 0px !important;
+}
+
+#dropdown ul li{
+    margin-left: 0px !important;
+}
+
+.deleteModal{ 
+    width: 50% !important;
+}
+
+.invalid{
+    background: #ff000039;
+    border: 2px solid #ff000080 !important;
+}
 /*RESPONSIVE*/
 
 /*Desde la anchura 963px hasta la anchura 1488px de pantalla*/
@@ -594,5 +636,14 @@ textarea{
 
     #slider.slider-small h1{
        padding-top: 35px;
+    }
+
+    /* Mios*/
+    #numfavs{
+        right: 4%;
+    }
+
+    .deleteModal{
+        width: 70% !important;
     }
 }

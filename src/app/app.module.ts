@@ -26,7 +26,10 @@ import { BlogComponent } from './components/blog/blog.component';
 import { CreateComponent } from './components/create/create.component';
 
 /* PIPES */
-import { SafeHtmlPipe } from './pipes/safe-html.pipe'
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { EditComponent } from './components/edit/edit.component';
+import { ErrorComponent } from './components/error/error.component';
+import { SearchComponent } from './components/search/search.component'
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe'
     SliderComponent,
     BlogComponent,
     CreateComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    EditComponent,
+    ErrorComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

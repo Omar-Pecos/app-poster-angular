@@ -1,11 +1,11 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router} from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { PostService } from '../../services/post.service';
+import {ToastrService } from 'ngx-toastr';
 
 //import Prism from 'prismjs';
 import Prism from '../../../assets/js/prism';
-import { error } from 'protractor';
 
 @Component({
   selector: 'app-post',
@@ -27,11 +27,15 @@ export class PostComponent implements OnInit, DoCheck {
   public viewingContent;
   public pos = 0;
   public modal = false;
+  public deleteModal = false;
+  public postToDelete;
 
   constructor(
     private _route: ActivatedRoute,
+    private _router : Router,
     private _postService: PostService,
-    private _userService: UserService
+    private _userService: UserService,
+    private toastr : ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -87,10 +91,14 @@ export class PostComponent implements OnInit, DoCheck {
 
         this.content = this.post.content;
         // delete this.post.content;
-        this.title = this.post.theme;
+        this.title = this.post.title;
       },
       error => {
         console.log(error);
+         //posible 404
+         if (error.error.status == 'error404'){
+          this._router.navigate(['/error/404']);
+        }
       }
     );
   }
@@ -106,7 +114,6 @@ export class PostComponent implements OnInit, DoCheck {
   cargarEstilosCodigo (){
     setTimeout(function () {
       let region = document.getElementById('contenido');
-      console.log(region);
 
       Prism.highlightAllUnder(region);
     }, 1000);
@@ -117,16 +124,7 @@ export class PostComponent implements OnInit, DoCheck {
     if (this.withProgress){
       if ( (this.pos + 1) == this.content.length){
         // se ha terminado de leer y llama a setUnprogress
-        this._userService.unsetProgress(this.token, this.post._id).subscribe(
-          response =>{
-            this.user = response.user;
-            this.withProgress = false;
-            this.pos = 0;
-          },
-          error =>{
-            console.log(error);
-          }
-         )
+        this.unsetProgress();
       }
     }
     this.modal = false;
@@ -149,8 +147,8 @@ export class PostComponent implements OnInit, DoCheck {
     let img = document.getElementById('image') as HTMLImageElement;
     let imageWrap = document.getElementsByClassName('image-wrap') as HTMLCollectionOf<HTMLElement>;
 
-    console.log('w : ' + img.width + ',' + img.height);
-    console.log('wNat : ' + img.naturalWidth + ',' + img.naturalHeight);
+    //console.log('w : ' + img.width + ',' + img.height);
+    //console.log('wNat : ' + img.naturalWidth + ',' + img.naturalHeight);
 
 
     //si la foto es menos ancha que el total del imagewrap
@@ -158,7 +156,6 @@ export class PostComponent implements OnInit, DoCheck {
     if (img.naturalWidth < img.width) {
       imageWrap[0].style.width = img.naturalWidth + 'px';
       imageWrap[0].style.margin = '0 auto';
-
     }
 
     //altura de imageWrap a la altura de la img en pc/movil
@@ -167,7 +164,6 @@ export class PostComponent implements OnInit, DoCheck {
     /* deberia ajustarlo a max 500px de alto */
     if (img.height > 500) {
       let proporcionMenor = (1 * 500) / img.height;
-      console.log(proporcionMenor);
 
       imageWrap[0].style.height = '500px';
       imageWrap[0].style.width = (img.width * proporcionMenor) + 'px';
@@ -184,7 +180,6 @@ export class PostComponent implements OnInit, DoCheck {
   doFav(){
     this._postService.favorite(this.token,this.post._id).subscribe(
       response =>{
-        console.log(response);
         this.post = response.post;
       },
       error =>{
@@ -196,7 +191,6 @@ export class PostComponent implements OnInit, DoCheck {
   undoFav(){
     this._postService.unfavorite(this.token,this.post._id).subscribe(
       response =>{
-        console.log(response);
         this.post = response.post;
       },
       error =>{
@@ -221,5 +215,49 @@ export class PostComponent implements OnInit, DoCheck {
         console.log(error);
       }
      )
+   }
+
+   unsetProgress(){
+    this._userService.unsetProgress(this.token, this.post._id).subscribe(
+      response =>{
+        this.user = response.user;
+        this.withProgress = false;
+        this.pos = 0;
+      },
+      error =>{
+        console.log(error);
+      }
+     );
+   }
+
+   /* Eliminar*/
+   openDeleteModal(post){
+      this.postToDelete = post;
+      this.deleteModal = true;
+   }
+
+   closeDeleteModal(){
+    this.deleteModal = false;
+   }
+
+   deletePost(){
+      this._postService.deletePost(this.token, this.postToDelete._id).subscribe(
+        response =>{
+          let post = response.post;
+          let theme = post.theme;
+          let tema = '';
+        if (theme == 'Prog'){
+          tema = 'Programación';
+        }else{
+          tema = theme;
+        }
+        this.closeDeleteModal();
+        this._router.navigate(['/blog/posts/todos']);
+        this.toastr.warning('El post "'+ post.title +'" de '+ tema +' ha sido eliminado correctamente','¡Éxito!');
+        },
+        error =>{
+          console.log(error);
+        }
+      )
    }
 }

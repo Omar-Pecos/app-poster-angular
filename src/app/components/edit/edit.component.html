@@ -1,0 +1,106 @@
+<slider size='small' title='Editar Post'></slider>
+
+<div class="center">
+    <section *ngIf="post" id="content">
+             <br/>
+        <form  #createForm="ngForm" class="mid-form">
+            <div class="form-group">
+                <label for="title">Título</label>
+                <input type="text" name="title" #title="ngModel" [(ngModel)]="post.title" />
+            </div>
+    
+             <div class="form-group">
+                 <label for="url_image">Direccion de Imagen Principal</label>
+                 <input type="text" name="url_image" #url_image="ngModel" [(ngModel)]="post.url_image" />
+             </div>
+    
+             <div class="form-group">
+                <label for="url_yt">Url de vídeo</label>
+                <input type="text" name="url_yt" #url_yt="ngModel" [(ngModel)]="post.url_yt" />
+            </div>
+    
+             <div class="form-group">
+                 <label for="theme">Tema</label>
+                <!--  <input type="text" name="theme"  #theme="ngModel" [(ngModel)]="post.theme" /> -->
+                 <select name="theme" (change)="onChangeSelected()" #theme="ngModel" [(ngModel)]="post.theme">
+                     <option value="-1">Seleccione</option>
+                     <option value="Recetas">Recetas</option>
+                     <option value="Prog">Programación</option>
+                     <option value="Arte">Arte</option>
+                 </select>
+             </div>
+    
+             <div class="form-group">
+                <label for="category">Categoría</label>
+               <!--  <input type="text"/> -->
+               <select  name="category" #category="ngModel" [(ngModel)]="post.category">
+                <option value="-1">Seleccione</option>
+                <option *ngFor="let cat of cats" [value]="cat.name">{{cat.name}}</option>
+            </select>
+            </div>
+    
+             <div class="clearfix"></div>
+    
+             <button (click)="submitPost($event)" class="btn btn-success" [disabled]="post.content.length == 0" >Editar</button>
+    
+            <div *ngIf="errors.length > 0" class="alert-danger">
+                <p *ngFor="let error of errors">{{error}}</p>
+            </div>
+
+        </form>
+
+        <div *ngFor="let seccion of post.content;index as i" class="contenidos">
+           <span>
+            <small class="badge badge-black">Sección {{ (i+1) }}º </small>
+            <img (click)="deleteSeccion(i)" style="width: 30px;position:relative;top:10px"
+            src="https://img.icons8.com/plasticine/100/000000/filled-trash.png" />
+           </span> 
+            <div  [innerHTML]="seccion | safeHtml"></div>
+        </div>
+
+        <h3 class="subheader">Editor de contenidos</h3>
+        <editor [(ngModel)]="dataModel" [init]="{
+            height: 500,
+            menubar: false,
+            plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code codesample fullscreen',
+            'insertdatetime media table paste help wordcount'
+            ],
+            toolbar:
+            'undo redo | formatselect  | link image media table paste | codesample code visualblocks |  bold italic backcolor | \
+            alignleft aligncenter alignright alignjustify | \
+            bullist numlist outdent indent | removeformat | help',
+            codesample_global_prismjs: true,
+            codesample_languages: [
+                    { text: 'HTML/XML', value: 'markup' },
+                    { text: 'JavaScript', value: 'javascript' },
+                    { text: 'JSON', value: 'json' },
+                    { text: 'CSS', value: 'css' },
+                    { text: 'PHP', value: 'php' },
+                    { text: 'C#', value: 'csharp' },
+                    { text: 'C++', value: 'cpp' },
+                    { text: 'ReactJSX', value: 'jsx' },
+                    { text: 'Typescript', value: 'ts' },
+                    { text: 'GraphQL', value: 'graphql' }
+            ]
+            }"></editor>
+
+        <div class="btn-row">
+            <a *ngIf="edicion" (click)="guardarEdicion(secToEdit)" class="btn btn-action">Guardar edición</a>
+            <a *ngIf="!edicion" (click)="nuevaSeccion()" class="btn btn-action">Nueva sección</a>
+
+            <span *ngIf="post.content.length > 0">
+                <a (click)="editarSeccion(secToEdit)" class="btn btn-action">Seleccionar sección</a>
+                <select [(ngModel)]="secToEdit">
+                    <option *ngFor="let opt of post.content;index as i" [value]="i" >{{ (i+1) }}</option>
+                </select>
+            </span>
+        </div>
+
+    </section>
+
+    <sidebar [logued]="logued"></sidebar>
+
+    <div class="clearfix"></div>
+</div>

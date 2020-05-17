@@ -1,4 +1,6 @@
-import { Component,OnInit, OnChanges, Input, DoCheck } from '@angular/core';
+import { Component,OnInit, Input, DoCheck } from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'sidebar',
@@ -9,7 +11,10 @@ export class SidebarComponent implements OnInit ,DoCheck{
 
   @Input() logued;
   public displayCreate = false;
-  constructor() { 
+  
+  constructor(
+    private _router : Router
+  ) { 
   }
 
   ngOnInit(): void {
@@ -26,6 +31,13 @@ ngDoCheck(){
   }else{
     this.displayCreate = false;
   }
+}
+
+onSubmit(form : NgForm){
+  let data = form.value;
+  console.log(data.search);
+  
+  this._router.navigate(['/buscar/'+data.search]);
 }
   
 

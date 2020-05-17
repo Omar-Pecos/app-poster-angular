@@ -24,8 +24,8 @@
 
 
             <div *ngIf="identity && (identity.id == post.user_id || identity.role == 1 )" class="btn-row">
-               <button style="border : 4px solid orange" class="btn btn-warning">Editar</button>
-               <button style="border:  4px solid red" class="btn btn-danger">Eliminar</button>
+               <button [routerLink]="['/editar/', post._id ]" style="border : 4px solid orange" class="btn btn-warning">Editar</button>
+               <button (click)="openDeleteModal(post)" style="border:  4px solid red" class="btn btn-danger">Eliminar</button>
            </div>      
 
                <hr/>
@@ -33,8 +33,8 @@
             <div class="btn-row">
                 <a (click)="openModal(pos)" class="btn btn-action">
                     <img src="https://img.icons8.com/plasticine/100/000000/reading.png"/>&nbsp;
-                    <b *ngIf="pos == 0">Leer</b> 
-                    <b *ngIf="pos != 0">Continuar</b>
+                    <b *ngIf="pos == 0 && !withProgress">Leer</b> 
+                    <b *ngIf="pos != 0 || withProgress">Continuar</b>
                 </a>
                 <a *ngIf="post.url_yt" (click)="openInNewTab(post.url_yt)" class="btn btn-action">
                     <img src="https://img.icons8.com/plasticine/100/000000/youtube-play.png"/>&nbsp;Vídeo
@@ -91,7 +91,30 @@
                     <img  width="50" src="https://img.icons8.com/plasticine/100/000000/like--v1.png"/>
                   </a>
                 <a *ngIf="identity" class="btn btn-action" (click)="saveProgress()">Guardar progreso</a>
+                <a *ngIf="identity && withProgress" class="btn btn-action" (click)="unsetProgress()">Descartar progreso</a>
         </div>
       </div>
   
   </div>
+
+  <!-- Delete Modal -->
+<div *ngIf="deleteModal" id="myModal" class="modal">
+
+    <div class="modal-content deleteModal">
+        <div class="modal-header">
+            <span (click)="closeDeleteModal()" class="close alert-danger">&times;</span>
+            <h2>¿Eliminar este Post?</h2>
+        </div>
+        <div class="modal-body">
+            <h4>¿Está seguro de eliminar el post <b>"{{post.title}}"</b> que pertenece al usuario "<b>{{post.author}}</b>"?</h4>
+            <h3> Esta acción es irreversible</h3>
+        </div>
+        <div class="modal-footer">
+            <span class="btn-row">
+                <a (click)="closeDeleteModal()" class="btn btn-white">Cancelar</a>&nbsp;
+                <a (click)="deletePost()" class="btn btn-danger">Eliminar</a>
+            </span>
+        </div>
+    </div>
+
+</div>

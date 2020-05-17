@@ -30,7 +30,10 @@
 
         <h2 class="subheader">Últimos posts</h2>
         <app-posts
-                last="true"
+            [identity]="identity"
+            [token]="token"
+            [posts]="posts" 
+            [status]="status"
         ></app-posts>
 
     </section>

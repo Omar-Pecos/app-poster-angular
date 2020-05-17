@@ -21,10 +21,27 @@
                     <a [routerLink]="['/categorias']">Categorías</a>
                 </li>
                 <li>
+                    <small (click)="doDropdown()" class="badge badge-black">
+                        <img width="20" style="position: relative;top: 5px;"
+                             src="https://img.icons8.com/plasticine/100/000000/circled-chevron-down.png"/>
+                        {{identity.username}}
+                    </small>
+                        &nbsp;
                     <a (click)="logout()">Salir</a>
                 </li>
-            </ul>
 
+                <!-- DROPDOWN Usuarios  -->
+                <div *ngIf="dropdown" id="dropdown">
+                    <ul class="btn-column">
+                        <li>
+                            <a href="#">Perfil</a>
+                        </li>
+                        <li *ngIf="identity.role == 1">
+                            <a href="#">Usuarios</a>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
             <ul *ngIf="!identity" >
                 <li>
                     <a [routerLink]="['/home/inicio']">Inicio</a>

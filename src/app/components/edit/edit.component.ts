@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import {Router} from '@angular/router';
+import {Router,ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {PostService} from '../../services/post.service';
 import {ToastrService} from 'ngx-toastr';
@@ -8,13 +8,12 @@ import {Post} from '../../models/post';
 //Prism
 import Prism from '../../../assets/js/prism';
 
-
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css']
 })
-export class CreateComponent implements OnInit,DoCheck{
+export class EditComponent implements OnInit ,DoCheck{
   public token;
   public identity;
   public logued;
@@ -27,6 +26,7 @@ export class CreateComponent implements OnInit,DoCheck{
   public secToEdit = 0;
 
   constructor(
+    private _route : ActivatedRoute,
     private _router : Router,
     private _userService : UserService,
     private _postService : PostService,
@@ -34,9 +34,6 @@ export class CreateComponent implements OnInit,DoCheck{
   ) { }
 
   ngOnInit(): void {
-
-    this.post = new Post('','','',[],'','','','-1','-1','',{});
-    
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
     if (this.token){
@@ -44,6 +41,38 @@ export class CreateComponent implements OnInit,DoCheck{
     }else{
       this.logued = false;
     }
+
+    //posible 401
+    if (!this.identity){
+      this._router.navigate(['/error/401']);
+    }
+
+   //cojer Post de la ruta con su ID
+    this._route.params.subscribe(params =>{
+      let postId = params['id'];
+
+      this._postService.getPost(postId).subscribe(
+        response =>{
+          this.post = response.post;
+
+            //posible 403
+            if (this.post.user_id != this.identity.id && this.identity.role != 1){
+              this._router.navigate(['/error/403']);
+            }else{
+              this.onChangeSelected();
+              this.cargarEstilosCodigo();
+            }
+ 
+        },
+        error =>{
+          console.log(error);
+          //posible 404
+            if (error.error.status == 'error404'){
+              this._router.navigate(['/error/404']);
+            }
+        }
+      )
+    });
   }
 
   ngDoCheck(){
@@ -85,14 +114,11 @@ export class CreateComponent implements OnInit,DoCheck{
   //crear Post enviando el FORM
   submitPost(e){
     e.preventDefault();
-    
-    //añadir el user_id
-    this.post.user_id = this.identity.id;
    
     //validate
    const valid = this.validate();
    if (valid){
-     this.crearPost();
+     this.editPost();
    }
    
   }
@@ -108,12 +134,12 @@ export class CreateComponent implements OnInit,DoCheck{
     }
   }
 
-  crearPost(){
-    this._postService.createPost(this.token , this.post).subscribe(
+  editPost(){
+    this._postService.editPost(this.token , this.post._id ,this.post).subscribe(
       response =>{
-        this._router.navigate(['/blog/posts/todos']);
+        this._router.navigate(['/post/'+this.post._id]);
         //toastr
-        this.toastr.success('Post "'+this.post.title+'" creado correctamente','¡Éxito!');
+        this.toastr.success('Post "'+this.post.title+'"editado correctamente','¡Éxito!');
       },
       error =>{
         console.log(error);

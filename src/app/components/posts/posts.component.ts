@@ -1,28 +1,85 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input,SimpleChanges, OnChanges} from '@angular/core';
 import { PostService } from '../../services/post.service';
-import { error } from 'protractor';
 
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css']
 })
-export class PostsComponent implements OnInit,OnChanges {
-
-  public posts;
-  @Input() last;
-  @Input() filter;
-  @Input() value;
+export class PostsComponent implements OnInit, OnChanges{
+  @Input() token;
+  @Input() identity;
+ @Input () status;
+ @Input() posts;
 
   constructor(
-      private _postService : PostService
+    private _postService : PostService
   ) { }
 
   ngOnInit(): void {
-    this.comprobarParamsUrl();
+   // this.comprobarParamsUrl();
   }
 
-  comprobarParamsUrl(){
+  ngOnChanges(changes : SimpleChanges){
+
+   if (changes.posts){
+     if (changes.posts.currentValue){
+      this.setAllFavedGuys(this.posts);
+     }
+   } 
+  }
+
+  setAllFavedGuys(array){
+    array.map(post =>{
+      let cadena;
+      let keys = Object.keys(post.favorites);
+      let count = keys.length;
+
+      if (count > 0){
+          if (count == 1){
+            cadena = 'A '+ keys[0] + ' le gusta';
+          }else{
+            let arreglo = [];
+            for (let i = 0 ; i<keys.length ; i++){
+              arreglo.push(keys[i]);
+            }
+            cadena = 'A ' +  arreglo.join(',') + ' les gusta';
+          }
+      }
+      post.likes = cadena;
+    });
+  }
+
+  /* Favs */
+  doFav(posArray){
+    this._postService.favorite(this.token , this.posts[posArray]._id ).subscribe(
+      response =>{
+        this.posts[posArray].favorites = response.post.favorites;
+        this.setAllFavedGuys([this.posts[posArray]]);
+      },
+      error =>{
+        console.log(error);
+      }
+    );
+  }
+
+  undoFav(posArray){
+    this._postService.unfavorite(this.token , this.posts[posArray]._id).subscribe(
+      response =>{
+        this.posts[posArray].favorites = response.post.favorites;
+        this.setAllFavedGuys([this.posts[posArray]]);
+      },
+      error =>{
+        console.log(error);
+      }
+    );
+  }
+
+  countObj(obj){
+    return Object.keys(obj).length;
+  }
+
+ /* comprobarParamsUrl(){
     if(this.last){
       this.getPosts(this.last);
     }else{
@@ -35,13 +92,9 @@ export class PostsComponent implements OnInit,OnChanges {
         }
       }
     }
-  }
-
- /* ngDoCheck(){
-    this.comprobarParamsUrl();
   }*/
 
-  ngOnChanges(simpleChanges : SimpleChanges){
+/*  ngOnChanges(simpleChanges : SimpleChanges){
   
     if (simpleChanges.filter){
       if (simpleChanges.filter.currentValue != simpleChanges.filter.previousValue || simpleChanges.value.currentValue != simpleChanges.value.previousValue ){
@@ -53,28 +106,6 @@ export class PostsComponent implements OnInit,OnChanges {
       }
     }
     
-  }
-
-  getPosts(lastValue){
-      this._postService.getPosts(lastValue).subscribe(
-        response =>{
-            this.posts = response.posts;
-        },
-        error =>{
-          console.log(error);
-        }
-      )
-  }
-
-  getFilteredPosts(){
-    this._postService.getFilteredPosts( this.filter , this.value ).subscribe(
-      response =>{
-          this.posts = response.posts;
-      },
-      error =>{
-        console.log(error);
-      }
-    )
-  }
+  }*/
 
 }

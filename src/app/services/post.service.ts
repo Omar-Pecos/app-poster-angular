@@ -35,10 +35,26 @@ export class PostService{
         return this._http.get(this.URL + 'post/'+ id);
     }
 
+    searchPosts(search) : Observable<any>{
+        return this._http.get(this.URL + 'searchposts/'+ search);
+    }
+
     createPost(token,post){
         let headers = new HttpHeaders()
             .set('x-access-token', token);
         return this._http.post(this.URL + 'posts/create', post , {headers : headers});
+    }
+
+    editPost(token,postId,post){
+        let headers = new HttpHeaders()
+            .set('x-access-token', token);
+        return this._http.put(this.URL + 'posts/edit/'+postId, post , {headers : headers});
+    }
+
+    deletePost(token,postId) : Observable<any>{
+        let headers = new HttpHeaders()
+            .set('x-access-token', token);
+        return this._http.delete(this.URL + 'posts/delete/'+ postId, {headers});
     }
 
     favorite(token,postId) : Observable<any>{

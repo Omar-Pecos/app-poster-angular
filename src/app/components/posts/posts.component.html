@@ -1,9 +1,28 @@
 
+<div *ngIf="!status">
+    <h3>Cargando ...</h3>
+    <img src="assets/images/loading.gif" alt="loading">
+</div>
+
+<div *ngIf="status && posts.length == 0">
+    <h3>No hay posts que mostrar</h3>
+</div>
 
 <!--Listado articulos-->
-<div *ngIf="posts" id="articles">
+<div *ngIf="status" id="articles">
    
-        <article *ngFor="let post of posts" class="article-item" id="article-template">
+        <article *ngFor="let post of posts; index as i" class="article-item" id="article-template">
+                    <span id="fav">
+                        <!-- noFav -->
+                        <a *ngIf=" identity && !post.favorites[identity.username]" (click)="doFav(i)">
+                        <img width="50" src="https://img.icons8.com/plasticine/100/000000/like--v2.png"/>
+                        </a>
+                        <!-- Fav -->
+                        <a *ngIf="identity && post.favorites[identity.username]" (click)="undoFav(i)" >
+                        <img  width="50" src="https://img.icons8.com/plasticine/100/000000/like--v1.png"/>
+                        </a>
+                    </span>
+                   
             <div class="image-wrap thumbnail">
                 <img  *ngIf="post.url_image" [src]="post.url_image" alt="post.title" />
                 <img  *ngIf="!post.url_image" src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
@@ -29,8 +48,17 @@
             <span class="date">
                 {{post.date | amLocale : 'es' | amTimeAgo}}
             </span>
-            <a [routerLink]="['/post', post._id]">Ver Post</a>
 
+                <!-- NumFavoritos -->
+                <span *ngIf="identity" id="numfavs">
+                    <small>
+                        {{countObj(post.favorites)}}
+                        <img  width="10" src="https://img.icons8.com/plasticine/100/000000/like--v1.png"/>
+                    </small>
+                </span>
+
+            <a [routerLink]="['/post', post._id]">Ver Post</a>
+            <small *ngIf="identity && post.likes"style="color: grey;" >{{post.likes}}</small>
             <div class="clearfix"></div>
         </article>
 
