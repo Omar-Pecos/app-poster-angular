@@ -61,6 +61,7 @@ export class SearchComponent implements OnInit {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     ) 
   }

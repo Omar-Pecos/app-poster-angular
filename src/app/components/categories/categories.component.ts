@@ -17,6 +17,7 @@ export class CategoriesComponent implements DoCheck {
   public catsArte;
   public catsProg;
   public catsRecetas;
+  public catsOtros;
 
   public createModal = false;
   public editModal = false;
@@ -56,6 +57,7 @@ export class CategoriesComponent implements DoCheck {
     this.catsRecetas = [];
     this.catsProg = [];
     this.catsArte = [];
+    this.catsOtros = [];
 
     this._postService.getCategories().subscribe(
       response =>{
@@ -72,13 +74,17 @@ export class CategoriesComponent implements DoCheck {
           if (cat.theme == 'Arte'){
             this.catsArte.push(cat);
           }
+          if (cat.theme == 'Otros'){
+            this.catsOtros.push(cat);
+          }
        });
 
        this.status = true;
 
       },
       error =>{
-        console.log(error);  
+        console.log(error);
+        this._postService.errorHandler(error);  
       }
     )
   }
@@ -95,6 +101,7 @@ export class CategoriesComponent implements DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     )
   }
@@ -131,6 +138,7 @@ export class CategoriesComponent implements DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     )
   }
@@ -162,6 +170,7 @@ export class CategoriesComponent implements DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     )
   }

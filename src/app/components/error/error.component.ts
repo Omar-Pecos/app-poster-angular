@@ -35,6 +35,7 @@ export class ErrorComponent implements OnInit {
           this._router.navigate(['/home/inicio']);
           break;
         case '401':
+          this.checkAndDoLogout();
           this._router.navigate(['/home/login']);
           break;
         case '403':
@@ -49,4 +50,15 @@ export class ErrorComponent implements OnInit {
       
     },3000);
   }
+
+  checkAndDoLogout(){
+    if (localStorage.getItem('token')){
+      localStorage.removeItem('token');
+    }
+   
+    if (localStorage.getItem('identity')){
+      localStorage.removeItem('identity');
+    }
+  }
+
 }

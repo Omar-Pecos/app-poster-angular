@@ -29,7 +29,10 @@ import { CreateComponent } from './components/create/create.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { EditComponent } from './components/edit/edit.component';
 import { ErrorComponent } from './components/error/error.component';
-import { SearchComponent } from './components/search/search.component'
+import { SearchComponent } from './components/search/search.component';
+import { LibraryComponent } from './components/library/library.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UsersComponent } from './components/users/users.component'
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { SearchComponent } from './components/search/search.component'
     SafeHtmlPipe,
     EditComponent,
     ErrorComponent,
-    SearchComponent
+    SearchComponent,
+    LibraryComponent,
+    ProfileComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

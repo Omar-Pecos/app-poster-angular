@@ -59,6 +59,22 @@
             </div>
         </div>
 
+        <h1>Otros</h1>
+        <div class="btn-row">
+            <div *ngFor="let cat of catsOtros" class="btn-column">
+                <span  class="badge badge-purple">
+                    <b>{{cat.name}}</b>
+                </span>
+                <span *ngIf="identity && identity.role == '1'"
+                    style="border-radius: 7px;margin-top: 2px;background: #c1c1c1;">
+                    <img (click)="openEditModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/edit.png" /> &nbsp;
+                    <img (click)="openDeleteModal(cat)" width="50"
+                        src="https://img.icons8.com/plasticine/100/000000/filled-trash.png" />
+                </span>
+            </div>
+        </div>
+
     </section>
 
     <sidebar [logued]="logued"></sidebar>
@@ -82,6 +98,7 @@
                         <option value="Prog">Programación</option>
                         <option value="Recetas">Recetas</option>
                         <option value="Arte">Arte</option>
+                        <option value="Otros">Otros</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -112,6 +129,7 @@
                         <option value="Prog">Programación</option>
                         <option value="Recetas">Recetas</option>
                         <option value="Arte">Arte</option>
+                        <option value="Otros">Otros</option>
                     </select>
                 </div>
                 <div class="form-group">

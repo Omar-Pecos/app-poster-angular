@@ -24,24 +24,26 @@
                     </span>
                    
             <div class="image-wrap thumbnail">
-                <img  *ngIf="post.url_image" [src]="post.url_image" alt="post.title" />
-                <img  *ngIf="!post.url_image" src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
+                <img (load)="onLoadImage130($event)" *ngIf="post.url_image" [src]="post.url_image" alt="post.title" />
+                <img  *ngIf="!post.url_image" src="assets/images/default.jpg" alt="Default" />
             </div>
 
             <h2>{{post.title}}</h2>
-            <small>{{post.author}}</small>
+            <small [routerLink]="['/blog/user_id/' + post.user_id]">{{post.author}}</small>
             <p>
                 <span [routerLink]="['/blog/theme/' + post.theme]" class="badge" 
                     [ngClass]="{ 
                         'badge-black' : post.theme === 'Prog',
                         'badge-brown' : post.theme === 'Arte',
-                        'badge-green' : post.theme === 'Recetas'
+                        'badge-green' : post.theme === 'Recetas',
+                        'badge-purple' : post.theme === 'Otros'
                 }">{{post.theme}}</span> &nbsp;
                 <span [routerLink]="['/blog/category/' + post.category]" class="badge" 
                     [ngClass]="{ 
                         'badge-black' : post.theme === 'Prog',
                         'badge-brown' : post.theme === 'Arte',
-                        'badge-green' : post.theme === 'Recetas'
+                        'badge-green' : post.theme === 'Recetas',
+                        'badge-purple' : post.theme === 'Otros'
                 }"><small>Categoría : {{post.category}}</small></span>
             </p>
             

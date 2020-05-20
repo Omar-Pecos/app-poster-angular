@@ -85,6 +85,7 @@ export class PostComponent implements OnInit, DoCheck {
             },
             error =>{
               console.log(error);
+              this._postService.errorHandler(error);
             }
           )
         }
@@ -95,10 +96,11 @@ export class PostComponent implements OnInit, DoCheck {
       },
       error => {
         console.log(error);
-         //posible 404
+        this._postService.errorHandler(error);
+        /* //posible 404
          if (error.error.status == 'error404'){
           this._router.navigate(['/error/404']);
-        }
+        }*/
       }
     );
   }
@@ -184,6 +186,7 @@ export class PostComponent implements OnInit, DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     );
   }
@@ -195,6 +198,7 @@ export class PostComponent implements OnInit, DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     );
   }
@@ -213,6 +217,7 @@ export class PostComponent implements OnInit, DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
      )
    }
@@ -226,6 +231,7 @@ export class PostComponent implements OnInit, DoCheck {
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
      );
    }
@@ -257,6 +263,7 @@ export class PostComponent implements OnInit, DoCheck {
         },
         error =>{
           console.log(error);
+          this._postService.errorHandler(error);
         }
       )
    }

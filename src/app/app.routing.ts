@@ -10,6 +10,9 @@ import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
 import { ErrorComponent } from './components/error/error.component';
 import { SearchComponent } from './components/search/search.component';
+import { LibraryComponent } from './components/library/library.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UsersComponent } from './components/users/users.component';
 
  // Array de rutas
  const appRoutes : Routes = [
@@ -21,6 +24,9 @@ import { SearchComponent } from './components/search/search.component';
      {path : 'crear', component : CreateComponent},
      {path : 'editar/:id', component : EditComponent},
      {path : 'buscar/:search', component : SearchComponent},
+     {path : 'biblioteca', component : LibraryComponent},
+     {path : 'perfil/:id' , component : ProfileComponent},
+     {path : 'usuarios', component : UsersComponent},
      {path : 'error/:code' , component : ErrorComponent},
      {path : '**' , component : ErrorComponent},
      

@@ -1,0 +1,44 @@
+<slider
+    size='small'
+    title='Mi Biblioteca'
+></slider>
+
+<div class="center">
+    <section  id="content">
+
+        <h2 class="subheader">Leyendo</h2>
+        <div *ngIf="!statusProgress">
+            <h3>Cargando ...</h3>
+            <img src="assets/images/loading.gif" alt="loading">
+        </div>
+        
+        <div *ngIf="statusProgress && postsinProgress.length == 0">
+            <h3>No esta leyendo ningún post</h3>
+        </div>
+
+        <div *ngIf="statusProgress" class="btn-row">
+            <div *ngFor="let post of postsinProgress; index as i" class="badge"
+                style="background: rebeccapurple; margin: 5px;"
+                [routerLink]="['/post/', post._id]"
+            >
+               <p> {{post.title}} - Sección {{ (user.progress[i].content + 1)}} </p>
+               <small>{{ user.progress[i].date | date : 'd/M/yy, H:mm'}}</small>
+            </div>
+        </div>
+
+        <h2 class="subheader">Favoritos</h2>
+         <app-posts
+            [identity]="identity"
+            [token]="token"
+            [posts]="postsFav"
+            [status]="statusFav"
+        ></app-posts> 
+
+    </section>
+
+    <sidebar
+        [logued]="logued"
+    ></sidebar>
+
+    <div class="clearfix"></div>
+</div>

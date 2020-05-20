@@ -27,6 +27,11 @@
             <img src="https://img.icons8.com/plasticine/100/000000/road-closure.png"/>
         </div>
 
+        <div *ngIf="code == '500'">
+            <p>Error interno del servidor</p>
+            <img src="https://img.icons8.com/plasticine/100/000000/road-closure.png"/>
+        </div>
+
         <img src="assets/images/loading.gif" alt="Loading">
              <br/>
         <small>Se le redireccionará en unos segundos ...</small>

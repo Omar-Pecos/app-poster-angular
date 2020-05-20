@@ -10,7 +10,7 @@
 
         <!-- MENU -->
         <nav id="menu">
-            <ul *ngIf="identity" >
+            <ul style="position: relative;" *ngIf="identity" >
                 <li>
                     <a [routerLink]="['/home/inicio']">Inicio</a>
                 </li>
@@ -33,11 +33,14 @@
                 <!-- DROPDOWN Usuarios  -->
                 <div *ngIf="dropdown" id="dropdown">
                     <ul class="btn-column">
-                        <li>
-                            <a href="#">Perfil</a>
+                        <li (click)="doDropdown()">
+                            <a  [routerLink]="['/perfil/', identity.id]">Perfil</a>
                         </li>
-                        <li *ngIf="identity.role == 1">
-                            <a href="#">Usuarios</a>
+                        <li (click)="doDropdown()">
+                            <a [routerLink]="['/biblioteca']">Favs / Leyendo</a>
+                        </li>
+                        <li *ngIf="identity.role == 1" (click)="doDropdown()">
+                            <a [routerLink]="['/usuarios']">Usuarios</a>
                         </li>
                     </ul>
                 </div>

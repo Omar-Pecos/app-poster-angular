@@ -59,6 +59,7 @@ export class PostsComponent implements OnInit, OnChanges{
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     );
   }
@@ -71,12 +72,23 @@ export class PostsComponent implements OnInit, OnChanges{
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     );
   }
 
   countObj(obj){
     return Object.keys(obj).length;
+  }
+
+  onLoadImage130(e){
+    let image = e.target as HTMLImageElement;
+   
+    if (image.width > 130){
+      let offset = image.width - 130;
+      image.style.position = 'relative';
+      image.style.left = '-'+ (offset/2) +'px';
+    }
   }
 
  /* comprobarParamsUrl(){

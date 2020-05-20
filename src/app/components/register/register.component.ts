@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     private _userService: UserService
   ) {
     this.errors = [];
-    this.user = new User('', '', '', '', true, ['user']);
+    this.user = new User('','', '', '', '', true, ['user']);
   }
 
   ngOnInit(): void {

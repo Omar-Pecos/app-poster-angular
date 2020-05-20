@@ -1,0 +1,77 @@
+<slider
+    size='small'
+    [title]='title'
+></slider>
+
+<div class="center">
+    <section  id="content">
+        
+        <div *ngIf="!user">
+            <h3>Cargando ...</h3>
+            <img src="assets/images/loading.gif" alt="loading">
+        </div>
+
+        <form *ngIf="user" #editForm="ngForm" class="mid-form" style="margin: 20px auto;">
+            <div class="form-group">
+                <label for="fullname">Nombre Completo *</label>
+                <input type="text" name="fullname" #fullname="ngModel" [(ngModel)]="user.fullname"  required
+                    [ngClass]="{ 'invalid' : !fullname.valid && fullname.touched}"
+                />
+            </div>
+    
+             <div class="form-group">
+                 <label for="username">Nombre de Usuario *</label>
+                 <input type="text" name="username" #username="ngModel" [(ngModel)]="user.username" required 
+                    [ngClass]="{ 'invalid' : !username.valid && username.touched}"
+                 />
+             </div>
+    
+             <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="text" name="email" #email="ngModel" [(ngModel)]="user.email" required 
+                     [ngClass]="{ 'invalid' : !email.valid && email.touched}"
+                />
+            </div>
+
+            <div class="alert-danger" style="background: orange;">
+                Los campos de contraseña sólo son obligatorios si desea cambiar la contraseña actual
+            </div>
+    
+             <div class="form-group">
+                 <label for="password">Contraseña actual</label>
+                 <input type="password" name="password"  #password="ngModel" [(ngModel)]="user.password" />
+             </div>
+    
+             <div class="form-group">
+                <label for="newPass">Nueva Contraseña</label>
+                <input type="password" name="newPass" [(ngModel)]="newPass"
+                    [ngClass]="{ 'invalid' : password && !newPass}"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPass">Confirmar Contraseña</label>
+                <input type="password" name="confirmPass" [(ngModel)]="confirmPass" 
+                    [ngClass]="{ 'invalid' : password && !confirmPass}"
+                />
+            </div>
+    
+             <div class="clearfix"></div>
+    
+             <button [disabled]="!editForm.valid" (click)="submitEdit($event)" class="btn btn-success" >Editar</button>
+    
+             <div *ngIf="errors.length > 0" class="alert-danger">
+                <p *ngFor="let error of errors">{{error}}</p>
+            </div>
+    
+        </form>   
+
+
+    </section>
+
+    <sidebar
+        [logued]="logued"
+    ></sidebar>
+
+    <div class="clearfix"></div>
+</div>

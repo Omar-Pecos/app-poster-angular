@@ -6,7 +6,12 @@
 <div class="center">
     <section  id="content">
 
+        <small *ngIf="status"
+            style="color : grey;position: relative;top: 30px;">
+        Núm de Resultados : {{posts.length}}
+        </small>
         <h2 class="subheader">Resultados</h2>
+
         <app-posts
             [identity]="identity"
             [token]="token"

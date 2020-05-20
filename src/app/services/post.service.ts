@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Global} from './global';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn : "root"
@@ -12,22 +13,30 @@ export class PostService{
     public URL;
 
     constructor(
-        private _http : HttpClient
+        private _http : HttpClient,
+        private _router : Router
     ){
         this.URL = Global.url;
     }
 
     /* POSTS */
-    getPosts(last): Observable<any>{
+    getPosts( last, changePage): Observable<any>{
         let urlParam = '';
         if (last == 'true'){
             urlParam = '/true';
         }
+        if (Object.keys(changePage).length > 0){
+            urlParam = '?' + changePage.direction + '=' + changePage.value;
+        }
+        
         return this._http.get(this.URL + 'posts' + urlParam);
     }
-    getFilteredPosts(filter,value) : Observable<any>{
+    getFilteredPosts(filter,value, changePage) : Observable<any>{
         let urlParam = '?field='+filter+'&value='+value;
-       
+        
+        if (Object.keys(changePage).length > 0){
+            urlParam += '&' + changePage.direction + '=' + changePage.value;
+        }
         return this._http.get(this.URL + 'filterposts' + urlParam);
     }
     
@@ -37,6 +46,10 @@ export class PostService{
 
     searchPosts(search) : Observable<any>{
         return this._http.get(this.URL + 'searchposts/'+ search);
+    }
+
+    getPostsCollection(collection):Observable<any>{
+        return this._http.post(this.URL + 'posts/collection', {collection});
     }
 
     createPost(token,post){
@@ -100,4 +113,23 @@ export class PostService{
         return this._http.delete(this.URL + 'category/delete/'+id,{headers : headers});
     }
 
+
+    /* Error Handler */
+    errorHandler(error){
+        //token no valido o no le pasa token
+        if (error.error.message == 'Unauthorized!'){
+            this._router.navigate(['/error/401']);  
+        }else if (error.status == 403){
+            this._router.navigate(['/error/403']);
+        }else if (error.error.status = 'error404'){
+            this._router.navigate(['/error/404']);
+        }
+        else if (error.status == 500){
+            this._router.navigate(['/error/500']);
+        }
+        else{
+            // error general
+            this._router.navigate(['/error']);
+        }
+    }
 }

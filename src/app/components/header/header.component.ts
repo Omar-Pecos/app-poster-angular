@@ -1,6 +1,7 @@
 import { Component,DoCheck } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { ToastrService } from 'ngx-toastr'
+import { ToastrService } from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
     selector : 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent implements DoCheck {
 
   constructor(
     private toastr : ToastrService,
-    private _userService : UserService
+    private _userService : UserService,
+    private _router : Router
 ){
    
     this.identity = this._userService.getIdentity();
@@ -27,6 +29,12 @@ logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('identity');
 
+    if (this.dropdown){
+      this.doDropdown();
+    }
+
+    this._router.navigate(['/home/login']);
+
      //prueba toastr
      this.toastr.warning( 'Te esperamos de vuelta','¡Adios!');
   }
@@ -34,8 +42,22 @@ logout(){
   doDropdown(){
     if (this.dropdown){
       this.dropdown = false;
+
+      if (window.screen.width < 500){
+        let header = document.getElementById('header');
+        header.style.paddingBottom = '0px';
+      }
     }else{
       this.dropdown = true;
+
+     if (window.screen.width < 500){
+       let size = '105px';
+        if (this.identity.role == 1){
+          size = '150px';
+        }
+        let header = document.getElementById('header');
+        header.style.paddingBottom = size;
+      }
     }
   }
 

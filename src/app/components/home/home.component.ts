@@ -51,13 +51,14 @@ export class HomeComponent {
   }
 
   getPosts(lastValue){
-    this._postService.getPosts(lastValue).subscribe(
+    this._postService.getPosts(lastValue,{}).subscribe(
       response =>{
           this.status = true;
           this.posts = response.posts;
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     )
 }

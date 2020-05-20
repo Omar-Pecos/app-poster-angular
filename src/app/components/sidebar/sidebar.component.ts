@@ -35,7 +35,7 @@ ngDoCheck(){
 
 onSubmit(form : NgForm){
   let data = form.value;
-  console.log(data.search);
+  //console.log(data.search);
   
   this._router.navigate(['/buscar/'+data.search]);
 }

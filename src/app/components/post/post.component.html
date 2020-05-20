@@ -13,11 +13,11 @@
         <article *ngIf="post" class="article-item article-detail">
             <div class="image-wrap">
                 <img (load)="onLoadImg()" id="image" *ngIf="post.url_image" [src]="post.url_image" alt="post.title" />
-                <img (load)="onLoadImg()" id="image" *ngIf="!post.url_image" src="https://unhabitatmejor.leroymerlin.es/sites/default/files/styles/header_category/public/2018-10/4%20paisaje%20macedonia.jpg?itok=AELknmF8" alt="Paisaje" />
+                <img (load)="onLoadImg()" id="image" *ngIf="!post.url_image" src="assets/images/default.jpg" alt="Default" />
             </div>
 
             <h1 class="subheader">{{post.title}}</h1>
-            <h3>{{post.author}}</h3>
+            <h3 [routerLink]="['/blog/user_id/' + post.user_id]" >{{post.author}}</h3>
             <span class="date">
                {{post.date | amLocale : 'es' | amTimeAgo}}
             </span>

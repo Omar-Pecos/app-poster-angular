@@ -7,6 +7,11 @@
 <div class="center">
     <section  id="content">
 
+        <small 
+            style="color : grey;position: relative;top: 30px;">
+        Pág {{page}}
+        </small>
+
         <h2 class="subheader">Posts</h2>
         <app-posts
             [identity]="identity"
@@ -15,6 +20,15 @@
             [status]="status"
         ></app-posts>
 
+        <div style="width: 60%;margin: 0 auto;" *ngIf="pagination" class="btn-row">
+            <span class="badge pagination" *ngIf="pagination.hasPrevious" (click)="changePage('previous')">
+                <img class="flechaIzq" src="https://img.icons8.com/plasticine/100/000000/circled-chevron-down.png"/>
+            </span>
+            <span  class="badge pagination">{{page}}</span>
+            <span class="badge pagination" *ngIf="pagination.hasNext" (click)="changePage('next')">
+                 <img class="flechaDer" src="https://img.icons8.com/plasticine/100/000000/circled-chevron-down.png"/>
+            </span>
+        </div>
     </section>
 
     <sidebar

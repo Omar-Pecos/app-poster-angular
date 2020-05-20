@@ -117,13 +117,17 @@ export class CreateComponent implements OnInit,DoCheck{
       },
       error =>{
         console.log(error);
-        this.errors.push(error.error.message);
-        if (error.error.message == 'Unauthorized!'){
+        if (error.status == 409){
+          this.errors.push(error.error.message);
+        }else{
+          this._postService.errorHandler(error);
+        }
+ 
+       /* if (error.error.message == 'Unauthorized!'){
           this.toastr.error('Inicie sesión de nuevo. Lo sentimos el progreso se perderá','¡Error!');
         }else{
           this.toastr.error('Algún error ocurrió.Intentelo de nuevo más tarde','¡Error!');
-        }
-       
+        }*/
       }
     );
   }

@@ -20,6 +20,10 @@ export class BlogComponent implements OnInit,DoCheck {
   public title;
   public filter;
   public value;
+  public ALL = false;
+
+  public page = 1;
+  public pagination;
 
   constructor(
       private _route : ActivatedRoute,
@@ -34,13 +38,17 @@ export class BlogComponent implements OnInit,DoCheck {
       this.filter = params['filter'];
       this.value = params['value'];
       
+      this.page = 1;
+
       if (this.filter == 'posts' && this.value == 'todos'){
         //ALL posts
-        this.getPosts('');
+        this.ALL = true;
+        this.getPosts('',{});
         
       }else{
         //Posts filtered
-        this.getFilteredPosts();
+        this.ALL = false;
+        this.getFilteredPosts({});
        
       }
     });
@@ -64,28 +72,85 @@ export class BlogComponent implements OnInit,DoCheck {
       }
   }
 
-  getPosts(lastValue){
-    this._postService.getPosts(lastValue).subscribe(
+  getPosts(lastValue,changePage){
+    this._postService.getPosts(lastValue, changePage).subscribe(
       response =>{
+          
+          let data = response.posts;
+          this.posts = data.results;
+          let obj = {
+            previous : data.previous,
+            hasPrevious : data.hasPrevious ,
+            next : data.next,
+            hasNext : data.hasNext
+          };
+          this.pagination = obj;
           this.status = true;
-          this.posts = response.posts;
           this.title = 'Todos los Posts';
       },
       error =>{
         console.log(error);
+        this._postService.errorHandler(error);
       }
     )
 }
 
-getFilteredPosts(){
-  this._postService.getFilteredPosts( this.filter , this.value ).subscribe(
+changePage(direction){
+  //console.log('entro!');
+  this.status = false;
+
+  //se entiende que son posts filtrados
+  if (!this.ALL){
+
+    if (direction == 'previous'){
+      this.page--;
+      this.getFilteredPosts( { direction , value : this.pagination.previous} );
+    }else{
+      this.page++;
+      this.getFilteredPosts( { direction , value : this.pagination.next} );
+    }
+
+  }else{
+      // Todos los posts
+      if (direction == 'previous'){
+        this.page--;
+        this.getPosts('',{ direction , value : this.pagination.previous});
+      }else{
+        this.page++;
+        this.getPosts('', { direction , value : this.pagination.next});
+      }
+  }
+ 
+}
+
+getFilteredPosts(changePage){
+  this._postService.getFilteredPosts( this.filter , this.value , changePage).subscribe(
     response =>{
+        
+        let data = response.posts;
+        this.posts = data.results;
+        let obj = {
+          previous : data.previous,
+          hasPrevious : data.hasPrevious ,
+          next : data.next,
+          hasNext : data.hasNext
+        };
+        this.pagination = obj;
         this.status = true;
-        this.posts = response.posts;
-        this.title = this.value;
+
+        if (this.value == 'Prog'){
+          this.title = 'Programación';
+        }else if (this.filter == 'user_id'){
+          this.title = this.posts[0].author;
+        }
+        else{
+          this.title = this.value;
+        }
+       
     },
     error =>{
       console.log(error);
+      this._postService.errorHandler(error);
     }
   )
 }

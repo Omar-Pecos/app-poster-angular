@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(
       private _userService : UserService
   ) {
-      this.user = new User('','','','',true,['user']);
+      this.user = new User('','','','','',true,['user']);
       this.errors = [];
    }
 

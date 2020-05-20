@@ -408,6 +408,10 @@ textarea{
     background-color: rgb(18, 18, 18);
  }
 
+ .badge-purple{
+    background: rebeccapurple;
+ }
+
  /* The Modal (background) */
 .modal {
     position: fixed; /* Stay in place */
@@ -511,7 +515,8 @@ textarea{
 
 #dropdown{
     position: absolute;
-    right: 18vw;
+    right: 30%;
+    transform: translateX(50%) translateY(-5px);
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -521,7 +526,8 @@ textarea{
 
 #dropdown ul{
     line-height: 30px !important;
-    padding-left: 0px !important;
+    width: auto;
+    padding-left: 10px !important;
 }
 
 #dropdown ul li{
@@ -535,6 +541,32 @@ textarea{
 .invalid{
     background: #ff000039;
     border: 2px solid #ff000080 !important;
+}
+
+.pagination{
+    background-color: plum;
+    padding: 5px 10px;
+    margin: 5px;
+}
+
+.containerTable{
+    overflow-x: auto;
+}
+
+.tableUsuarios{
+    margin: 5px auto;
+    border-collapse: collapse;
+}
+
+.tableUsuarios td, .tableUsuarios th{
+    padding: 15px;
+    border : 1px solid greenyellow; 
+}
+
+.cabecera{
+    background: plum;
+    color : white;
+    font-size: larger;
 }
 /*RESPONSIVE*/
 
