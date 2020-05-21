@@ -1,6 +1,11 @@
 <slider size='small' title='Editar Post'></slider>
 
 <div class="center">
+    <div *ngIf="!status">
+        <h3>Cargando ...</h3>
+        <img src="assets/images/loading.gif" alt="loading">
+    </div>
+    
     <section *ngIf="post" id="content">
              <br/>
         <form  #createForm="ngForm" class="mid-form">

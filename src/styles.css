@@ -638,6 +638,7 @@ textarea{
     #menu,
     #menu ul{
         line-height: 50px;
+        font-size: 4vw;
     }
 
     #menu ul li{

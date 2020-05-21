@@ -8,6 +8,12 @@
         <a (click)="openCreateModal()" class="btn btn-action">+ Crear nueva</a>
     </div>
 
+    
+    <div *ngIf="!status">
+        <h3>Cargando ...</h3>
+        <img src="assets/images/loading.gif" alt="loading">
+    </div>
+
     <section *ngIf="status" id="content">
         <h1>Recetas</h1>
         <div class="btn-row">
@@ -30,7 +36,7 @@
         <h1>Programación</h1>
         <div class="btn-row">
             <div *ngFor="let cat of catsProg" class="btn-column">
-                <span class="badge badge-black">
+                <span class="badge badge-black" [routerLink]="['/blog/category/' + cat.name]">
                     <b>{{cat.name}}</b>
                 </span>
                 <span *ngIf="identity && identity.role == '1'"
@@ -46,7 +52,7 @@
         <h1>Arte</h1>
         <div class="btn-row">
             <div *ngFor="let cat of catsArte" class="btn-column">
-                <span  class="badge badge-brown">
+                <span  class="badge badge-brown" [routerLink]="['/blog/category/' + cat.name]">
                     <b>{{cat.name}}</b>
                 </span>
                 <span *ngIf="identity && identity.role == '1'"
@@ -62,7 +68,7 @@
         <h1>Otros</h1>
         <div class="btn-row">
             <div *ngFor="let cat of catsOtros" class="btn-column">
-                <span  class="badge badge-purple">
+                <span  class="badge badge-purple" [routerLink]="['/blog/category/' + cat.name]">
                     <b>{{cat.name}}</b>
                 </span>
                 <span *ngIf="identity && identity.role == '1'"

@@ -30,7 +30,7 @@
 
             <h2>{{post.title}}</h2>
             <small [routerLink]="['/blog/user_id/' + post.user_id]">{{post.author}}</small>
-            <p>
+            <div style="justify-content: left;margin: 10px 0;" class="btn-row">
                 <span [routerLink]="['/blog/theme/' + post.theme]" class="badge" 
                     [ngClass]="{ 
                         'badge-black' : post.theme === 'Prog',
@@ -44,8 +44,8 @@
                         'badge-brown' : post.theme === 'Arte',
                         'badge-green' : post.theme === 'Recetas',
                         'badge-purple' : post.theme === 'Otros'
-                }"><small>Categoría : {{post.category}}</small></span>
-            </p>
+                }">&lt;{{post.category}}&gt;</span>
+            </div>
             
             <span class="date">
                 {{post.date | amLocale : 'es' | amTimeAgo}}

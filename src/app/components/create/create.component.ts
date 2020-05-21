@@ -44,6 +44,11 @@ export class CreateComponent implements OnInit,DoCheck{
     }else{
       this.logued = false;
     }
+
+    // posible 401
+    if (!this.identity){
+      this._router.navigate(['/error/401']);
+    }
   }
 
   ngDoCheck(){

@@ -13,7 +13,7 @@ export class CategoriesComponent implements DoCheck {
   public token;
   public logued;
 
-  public status;
+  public status = false;
   public catsArte;
   public catsProg;
   public catsRecetas;
@@ -127,11 +127,11 @@ export class CategoriesComponent implements DoCheck {
   editCat(e){
     e.preventDefault();
     
-    console.log(this.selectTema+' '+this.nombreCat);
+   // console.log(this.selectTema+' '+this.nombreCat);
 
     this._postService.editCategory(this.token,this.idCat, this.nombreCat, this.selectTema).subscribe(
       response =>{
-        console.log(response);
+       // console.log(response);
           this.closeModal('edit');
           this.getCategories();
           this.toastr.success('La categoría "'+this.nombreCat +'" ha sido editada correctamente','¡Éxito!');

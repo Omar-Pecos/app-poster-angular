@@ -19,6 +19,7 @@ export class EditComponent implements OnInit ,DoCheck{
   public logued;
   public errors = [];
 
+  public status = false;
   public post : Post;
   public cats;
   public dataModel;
@@ -61,6 +62,7 @@ export class EditComponent implements OnInit ,DoCheck{
             }else{
               this.onChangeSelected();
               this.cargarEstilosCodigo();
+              this.status = true;
             }
  
         },
